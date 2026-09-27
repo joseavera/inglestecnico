@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 1.2 — Estructuras gramaticales esenciales | Inglés para Ingeniería I</title>
+<meta name="description" content="Material de clase — Inglés para Ingeniería I, Unidad 1, Tema 1.2: tiempos verbales y voz pasiva aplicados al área de Sistemas Computacionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ── Extensiones propias de esta clase (no modifican base.css) ── */
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+
+  .mixtle-tip {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--guinda-light);
+    border: 1px solid #D8A8BA;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .mixtle-tip img { width: 110px; height: auto; flex-shrink: 0; }
+  .mixtle-bubble p { font-size: .97rem; line-height: 1.7; color: var(--ink); margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .mixtle-tip { flex-direction: column; align-items: center; text-align: left; }
+  }
+
+  .vocab-heading {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 2rem 0 .75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    color: var(--white);
+    font-family: var(--font-ui);
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .tag-active  { background: var(--guinda); }
+  .tag-passive { background: var(--guinda-dark); }
+
+  .transform-pair {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .3rem 1rem;
+    align-items: baseline;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .transform-pair .lbl {
+    font-family: var(--font-ui);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding-top: .2rem;
+  }
+  .transform-pair .lbl.active  { color: var(--guinda); }
+  .transform-pair .lbl.passive { color: var(--guinda-dark); }
+  .transform-pair .sentence { font-size: .96rem; line-height: 1.6; }
+
+  details.answer-key {
+    margin-top: 1rem;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: .75rem 1rem;
+    background: var(--surface);
+  }
+  details.answer-key summary {
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--guinda);
+  }
+  details.answer-key p { margin-top: .6rem; font-size: .92rem; }
+
+  .word-bank {
+    font-family: var(--font-mono);
+    font-size: .85rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .6rem 1rem;
+    margin: .75rem 0 1.1rem;
+    color: var(--guinda-dark);
+  }
+
+  .footer-brand { display: flex; align-items: center; gap: .75rem; }
+  .footer-brand img { height: 32px; width: auto; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap"><img src="imagen1.png" alt="Mixtle, mascota del IEDEP"></div>
+  <div class="header-text">
+    <span class="inst-name">Instituto de Educación Digital del Estado de Puebla</span>
+    <span class="doc-title">Material de clase · Inglés para Ingeniería I</span>
+  </div>
+</header>
+
+<section class="class-hero">
+  <div class="hero-inner">
+    <span class="class-label">Licenciatura en Sistemas Computacionales</span>
+    <h1>Tema 1.2 — Estructuras gramaticales esenciales</h1>
+    <span class="class-subtitle">Unidad 1: Fundamentos del inglés técnico · Tiempos verbales y voz pasiva en el área de Sistemas Computacionales</span>
+    <div class="meta-row">
+      <div class="meta-item">Programa educativo<span>Lic. en Sistemas Computacionales</span></div>
+      <div class="meta-item">Asignatura<span>Inglés para Ingeniería I</span></div>
+      <div class="meta-item">Unidad<span>1 · Fundamentos del inglés técnico</span></div>
+      <div class="meta-item">Tema<span>1.2 Estructuras gramaticales esenciales</span></div>
+      <div class="meta-item">Fecha<span>27 de septiembre de 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="page-wrapper">
+
+  <section class="section" id="competencias">
+    <h2 class="section-title">Competencias a desarrollar</h2>
+    <div class="competency-card">
+      <span class="comp-num">01</span>
+      <div class="comp-text"><strong>Reconocer</strong> los tiempos verbales esenciales (presente simple, pasado simple y presente perfecto) en textos técnicos de programación y sistemas computacionales.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">02</span>
+      <div class="comp-text"><strong>Construir</strong> oraciones en voz pasiva para describir procesos de desarrollo de software, despliegue de aplicaciones y administración de redes y servidores.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">03</span>
+      <div class="comp-text"><strong>Aplicar</strong> estas estructuras gramaticales en la lectura y redacción de fragmentos reales de documentación técnica de TI (manuales, <em>changelogs</em>, bitácoras de incidentes).</div>
+    </div>
+  </section>
+
+  <section class="section" id="analogia">
+    <h2 class="section-title">Punto de partida: la gramática como código fuente de la comunicación</h2>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, el mapache ingeniero, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«Piensa en una oración como si fuera una función. En <strong>voz activa</strong>, el sujeto es quien llama a la función: <em>“The developer deploys the app”</em> es como escribir <code>developer.deploy(app)</code>: sabemos exactamente quién ejecuta la acción. En <strong>voz pasiva</strong>, el foco cambia al objeto que recibe la acción: <em>“The app is deployed”</em>. Esto es exactamente lo que pasa en un <em>pipeline</em> de CI/CD: el código se despliega automáticamente y, muchas veces, no importa —o no sabemos— qué proceso específico lo ejecutó. Por eso la voz pasiva es la estructura dominante en la documentación técnica: describe <strong>qué pasa</strong>, no necesariamente <strong>quién lo hace</strong>.»</p>
+      </div>
+    </div>
+
+    <p>Así como un programa necesita una sintaxis correcta para compilar sin errores, un texto técnico necesita una gramática correcta para comunicarse sin ambigüedad. Hoy vamos a revisar tres tiempos verbales que aparecen constantemente en la documentación de sistemas computacionales, y después nos enfocaremos en la estructura que más se repite en manuales, <em>READMEs</em> y bitácoras: <strong>la voz pasiva</strong>.</p>
+  </section>
+
+  <section class="section" id="tiempos">
+    <h2 class="section-title">Tiempos verbales esenciales en documentación técnica</h2>
+    <p>Estos tres tiempos cubren la mayoría de las situaciones que encontrarás al leer o escribir documentación de software y sistemas.</p>
+
+    <table>
+      <thead><tr><th>Tiempo verbal</th><th>Estructura</th><th>Uso técnico</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Simple Present</strong></td>
+          <td>subject + verb (-s)</td>
+          <td>Especificaciones y comportamiento habitual del sistema</td>
+          <td>The server <strong>processes</strong> requests every 200 milliseconds.</td>
+        </tr>
+        <tr>
+          <td><strong>Simple Past</strong></td>
+          <td>subject + verb (-ed / irregular)</td>
+          <td>Bitácoras, reportes de incidentes, historial de cambios</td>
+          <td>The system <strong>crashed</strong> at 3:00 a.m.</td>
+        </tr>
+        <tr>
+          <td><strong>Present Perfect</strong></td>
+          <td>subject + have/has + past participle</td>
+          <td>Cambios recientes con relevancia actual (<em>changelogs</em>, <em>status reports</em>)</td>
+          <td>The team <strong>has updated</strong> the API documentation.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="pasiva">
+    <h2 class="section-title">La voz pasiva en el inglés técnico</h2>
+
+    <div class="formula-block">
+      <span class="section-label" style="margin-bottom:.5rem;">Fórmula</span>
+      <code class="formula">subject + to be (conjugado) + past participle [+ by + agente]</code>
+      <p class="formula-note">El agente (quién ejecuta la acción) es opcional: se omite cuando es desconocido, irrelevante o cuando el sistema mismo lo ejecuta automáticamente.</p>
+    </div>
+
+    <p>Compara cómo la misma información cambia de enfoque según la voz utilizada:</p>
+
+    <div class="transform-pair">
+      <span class="lbl active">Activa</span>
+      <span class="sentence">The system administrator <strong>configures</strong> the firewall every month.</span>
+      <span class="lbl passive">Pasiva</span>
+      <span class="sentence">The firewall <strong>is configured</strong> every month (by the system administrator).</span>
+    </div>
+
+    <div class="transform-pair">
+      <span class="lbl active">Activa</span>
+      <span class="sentence">The CI/CD pipeline <strong>tests</strong> the code automatically.</span>
+      <span class="lbl passive">Pasiva</span>
+      <span class="sentence">The code <strong>is tested</strong> automatically (by the CI/CD pipeline).</span>
+    </div>
+
+    <div class="transform-pair">
+      <span class="lbl active">Activa</span>
+      <span class="sentence">The development team <strong>deployed</strong> the new update last Friday.</span>
+      <span class="lbl passive">Pasiva</span>
+      <span class="sentence">The new update <strong>was deployed</strong> last Friday (by the development team).</span>
+    </div>
+
+    <div class="transform-pair">
+      <span class="lbl active">Activa</span>
+      <span class="sentence">A hacker <strong>attacked</strong> the network last month.</span>
+      <span class="lbl passive">Pasiva</span>
+      <span class="sentence">The network <strong>was attacked</strong> last month.</span>
+    </div>
+
+    <div class="callout note">
+      <p>En el último ejemplo el agente se omitió por completo. Es una de las razones más comunes para usar voz pasiva en ciberseguridad y en bitácoras técnicas: muchas veces <strong>no se sabe quién</strong> ejecutó la acción, así que el texto se enfoca en lo que le ocurrió al sistema.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin-top:1.75rem;">Presente pasivo vs. pasado pasivo</h3>
+    <table>
+      <thead><tr><th>Forma</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Presente pasivo</strong></td><td>am / is / are + past participle</td><td>The code <strong>is reviewed</strong> before every merge.</td></tr>
+        <tr><td><strong>Pasado pasivo</strong></td><td>was / were + past participle</td><td>The server <strong>was restarted</strong> after the update.</td></tr>
+        <tr><td><strong>Presente perfecto pasivo</strong></td><td>has / have been + past participle</td><td>The operating system <strong>has been updated</strong> recently.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="ejemplo">
+    <h2 class="section-title">Ejemplo resuelto: leyendo un fragmento de changelog</h2>
+    <div class="example-block">
+      <div class="example-header">Fragmento de un README / changelog de software</div>
+      <div class="example-body">
+        <div class="example-statement">
+          “The application <strong>is built</strong> using Docker. Last week, the database <strong>was migrated</strong> to a new server. Since then, response times <strong>have improved</strong> significantly. The API documentation <strong>is updated</strong> automatically every time a new endpoint is added. Yesterday, a critical vulnerability <strong>was discovered</strong> and immediately <strong>patched</strong> by the security team.”
+        </div>
+        <ol class="step-list">
+          <li><span class="step-n">1</span><span class="step-content">Localiza el presente pasivo: <em>is built</em>, <em>is updated</em> → describen procesos automatizados y recurrentes del sistema.</span></li>
+          <li><span class="step-n">2</span><span class="step-content">Localiza el pasado pasivo: <em>was migrated</em>, <em>was discovered</em>, <em>(was) patched</em> → describen eventos puntuales ya terminados.</span></li>
+          <li><span class="step-n">3</span><span class="step-content">Localiza el presente perfecto: <em>have improved</em> → un cambio que ocurrió en el pasado reciente y que sigue siendo relevante ahora.</span></li>
+          <li><span class="step-n">4</span><span class="step-content">Observa que el foco siempre está en el sistema (<em>the application</em>, <em>the database</em>, <em>the vulnerability</em>), no en la persona que ejecutó la acción.</span></li>
+        </ol>
+        <div class="result-line">Resultado: identificar la voz y el tiempo verbal te permite distinguir, de un vistazo, qué es automático, qué ya se resolvió y qué sigue vigente.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="practica">
+    <h2 class="section-title">Actividad práctica</h2>
+
+    <div class="card">
+      <span class="card-title">Ejercicio 1 · Transforma de voz activa a voz pasiva</span>
+      <p>Reescribe cada oración en voz pasiva, conservando el tiempo verbal original.</p>
+      <ol>
+        <li>The programmer writes the code in Python.</li>
+        <li>The team deployed the application to the cloud last night.</li>
+        <li>The IT department backs up the servers every night.</li>
+        <li>The QA team tested the new feature yesterday.</li>
+        <li>Someone has updated the operating system recently.</li>
+      </ol>
+      <details class="answer-key">
+        <summary>Ver respuestas</summary>
+        <p>
+          1. The code is written in Python (by the programmer).<br>
+          2. The application was deployed to the cloud last night (by the team).<br>
+          3. The servers are backed up every night (by the IT department).<br>
+          4. The new feature was tested yesterday (by the QA team).<br>
+          5. The operating system has been updated recently.
+        </p>
+      </details>
+    </div>
+
+    <div class="card">
+      <span class="card-title">Ejercicio 2 · Completa el changelog</span>
+      <p>Conjuga cada verbo del banco de palabras en voz pasiva, con el tiempo verbal adecuado según el contexto.</p>
+      <div class="word-bank">fix · release · encrypt · review · back up</div>
+      <p style="line-height:1.9;">
+        Version 2.3 <strong>______</strong> (release) last Tuesday. Three critical bugs <strong>______</strong> (fix) by the development team. All user data <strong>______</strong> (encrypt) before it is stored on the server. Every pull request <strong>______</strong> (review) by at least two engineers before it is merged. The entire system <strong>______</strong> (back up) automatically every night.
+      </p>
+      <details class="answer-key">
+        <summary>Ver respuestas</summary>
+        <p>was released · were fixed · is encrypted · is reviewed · is backed up</p>
+      </details>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Reto para tu portafolio:</strong> busca un fragmento real de un <em>README</em> o manual de software (por ejemplo, en GitHub o en la documentación de Python) y subraya las oraciones en voz pasiva. Reescribe dos de ellas en voz activa e identifica el tiempo verbal utilizado. Guarda este fragmento como evidencia para tu <strong>glosario técnico ilustrado</strong>, producto de la Unidad 1.</p>
+    </div>
+  </section>
+
+  <section class="section" id="cierre">
+    <h2 class="section-title">Cierre de la sesión</h2>
+    <div class="concept-box">
+      <span class="concept-title">Síntesis</span>
+      <p>Hoy repasaste tres tiempos verbales clave —<strong>simple present</strong>, <strong>simple past</strong> y <strong>present perfect</strong>— y aprendiste a construir la <strong>voz pasiva</strong> en presente, pasado y presente perfecto. Estas estructuras son las que dominan la documentación técnica de sistemas computacionales, porque describen procesos y estados del sistema sin depender de quién ejecutó la acción. En el Tema 1.3 aplicarás directamente estas estructuras a la lectura de manuales y especificaciones técnicas completas.</p>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <h2 class="section-title">Conclusión</h2>
+    <p>Así como un programa necesita una sintaxis correcta para ejecutarse sin errores, un texto técnico necesita una gramática correcta para comunicar sin ambigüedad. La voz pasiva, en particular, es la estructura que domina la documentación de sistemas computacionales: manuales, <em>READMEs</em>, <em>changelogs</em> y bitácoras de incidentes la usan constantemente porque el protagonista casi siempre es el sistema —el servidor, la base de datos, el código— y no la persona que lo operó. Dominar esta estructura no es solo un ejercicio gramatical: es la llave para leer con fluidez cualquier documentación técnica en inglés que encuentres en tu carrera.</p>
+  </section>
+
+  <section class="section" id="referencias">
+    <h2 class="section-title">Referencias bibliográficas</h2>
+    <p style="font-size:.92rem; color:var(--ink-secondary);">Glendinning, E. H. y McEwan, J. (2021). <em>Oxford English for computing</em> (Nueva edición revisada). Oxford University Press.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="imagen1.png" alt="Mixtle">
+    <span><strong>IEDEP</strong> · Instituto de Educación Digital del Estado de Puebla</span>
+  </div>
+  <span>Inglés para Ingeniería I · LSC626174 · Mtro. José Armando Vera Rodríguez</span>
+</footer>
+
+</body>
+</html>

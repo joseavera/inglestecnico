@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación — Tema 1.2 | Inglés para Ingeniería I</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ── Extensiones propias de esta evaluación (no modifican base.css) ── */
+  [hidden] { display: none !important; }
+
+  body {
+    -webkit-user-select: none; user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  input { -webkit-user-select: text; user-select: text; }
+  ::selection { background: transparent; }
+  img { -webkit-user-drag: none; user-select: none; }
+
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+  .class-hero { margin-bottom: 2rem; }
+
+  /* Marca de agua con el nombre del alumno */
+  #wm { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 50; }
+  .wm-inner {
+    position: absolute; top: -35%; left: -35%; width: 170%; height: 170%;
+    transform: rotate(-30deg);
+    display: flex; flex-direction: column; justify-content: space-around;
+  }
+  .wm-row { display: flex; gap: 5rem; white-space: nowrap; }
+  .wm-row span {
+    font-family: var(--font-ui); font-weight: 700; font-size: 1.5rem;
+    letter-spacing: .12em; color: var(--guinda); opacity: .065;
+  }
+  body.in-result .wm-row span { opacity: .09; }
+
+  /* Barra de estado durante la evaluación */
+  .statusbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--white); border-bottom: 2px solid var(--guinda);
+    box-shadow: var(--shadow-md);
+  }
+  .statusbar-inner {
+    max-width: 900px; margin: 0 auto; padding: .65rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .75rem 1.5rem; flex-wrap: wrap;
+  }
+  .stat { font-family: var(--font-ui); font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-muted); }
+  .stat b { display: block; font-size: 1.05rem; letter-spacing: 0; color: var(--guinda); font-weight: 700; text-transform: none; }
+  .stat.timer b { font-family: var(--font-mono); font-size: 1.3rem; }
+  .stat.danger b { color: #B3261E; }
+  .stat.warn b { color: #B3261E; }
+
+  /* Pregunta */
+  .q-card {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-left: 4px solid var(--guinda); border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: 1.6rem 1.8rem; box-shadow: var(--shadow-sm); margin-bottom: 1.25rem;
+  }
+  .q-label { font-family: var(--font-ui); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--guinda-mid); }
+  .q-instr { font-family: var(--font-ui); font-size: .95rem; color: var(--ink-secondary); margin: .5rem 0 .75rem; }
+  .q-text { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.35; color: var(--ink); margin-bottom: 1.25rem; font-weight: 600; }
+  .blank { display: inline-block; min-width: 4.5rem; border-bottom: 3px solid var(--guinda); margin: 0 .25rem; transform: translateY(-2px); }
+
+  .options { display: grid; gap: .75rem; }
+  .opt {
+    display: flex; align-items: center; gap: 1rem; width: 100%; text-align: left;
+    background: var(--white); border: 2px solid var(--border-strong); border-radius: var(--radius-lg);
+    padding: .9rem 1.1rem; cursor: pointer; font: inherit; color: var(--ink);
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .opt:hover { border-color: var(--guinda-rule); background: var(--guinda-light); }
+  .opt:active { transform: scale(.995); }
+  .opt:focus-visible { outline: 3px solid var(--guinda-rule); outline-offset: 2px; }
+  .opt-letter {
+    flex: 0 0 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--surface); border: 2px solid var(--border-strong);
+    font-family: var(--font-ui); font-weight: 700; font-size: .85rem; color: var(--guinda);
+  }
+  .opt-text { font-size: 1.12rem; line-height: 1.4; }
+  .opt.sel { border-color: var(--guinda); background: var(--guinda-light); }
+  .opt.sel .opt-letter { background: var(--guinda); border-color: var(--guinda); color: var(--white); }
+
+  /* Botones */
+  .btn {
+    font-family: var(--font-ui); font-size: .92rem; font-weight: 600; letter-spacing: .02em;
+    border-radius: var(--radius-md); padding: .75rem 1.5rem; cursor: pointer; border: 2px solid var(--guinda);
+    transition: background .15s, color .15s, opacity .15s;
+  }
+  .btn-primary { background: var(--guinda); color: var(--white); }
+  .btn-primary:hover:not(:disabled) { background: var(--guinda-dark); border-color: var(--guinda-dark); }
+  .btn-secondary { background: var(--white); color: var(--guinda); }
+  .btn-secondary:hover:not(:disabled) { background: var(--guinda-light); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .btn:focus-visible { outline: 3px solid var(--guinda-rule); outline-offset: 2px; }
+  .nav-row { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .btn-row { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+
+  /* Mapa de preguntas */
+  .qmap-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.3rem; }
+  .qmap-title { font-family: var(--font-ui); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--guinda-mid); display: block; margin-bottom: .6rem; }
+  .qmap { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .9rem; }
+  .qdot {
+    width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-strong); background: var(--white);
+    font-family: var(--font-ui); font-weight: 600; font-size: .8rem; color: var(--ink-secondary); cursor: pointer;
+  }
+  .qdot.done { background: var(--guinda-light); border-color: var(--guinda-rule); color: var(--guinda-dark); }
+  .qdot.cur  { background: var(--guinda); border-color: var(--guinda); color: var(--white); }
+  .qmap-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: .85rem; color: var(--ink-secondary); }
+
+  /* Inicio */
+  .mixtle-tip {
+    display: flex; gap: 1.5rem; align-items: center;
+    background: var(--guinda-light); border: 1px solid #D8A8BA; border-radius: var(--radius-lg);
+    padding: 1.4rem 1.5rem; margin: 0 0 1.5rem;
+  }
+  .mixtle-tip img { width: 110px; height: auto; flex-shrink: 0; }
+  .mixtle-bubble p { font-size: 1rem; line-height: 1.7; color: var(--ink); margin: 0; }
+  .field-label { font-family: var(--font-ui); font-size: .8rem; font-weight: 600; color: var(--guinda); display: block; margin-bottom: .4rem; }
+  .field {
+    width: 100%; font: inherit; font-size: 1.05rem; padding: .8rem 1rem;
+    border: 2px solid var(--border-strong); border-radius: var(--radius-md); background: var(--white); color: var(--ink);
+  }
+  .field:focus { outline: none; border-color: var(--guinda); box-shadow: 0 0 0 3px var(--guinda-light); }
+  .field-err { color: #B3261E; font-family: var(--font-ui); font-size: .85rem; margin-top: .5rem; }
+  .rules li { margin-bottom: .5rem; }
+
+  /* Resultado */
+  .result-card { background: var(--off-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-md); }
+  .result-top { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; border-bottom: 1.5px solid var(--guinda-rule); padding-bottom: 1.4rem; margin-bottom: 1.4rem; }
+  .result-mascot { width: 96px; height: auto; flex-shrink: 0; }
+  .result-who { flex: 1 1 260px; }
+  .result-who h2 { margin: .2rem 0 .4rem; font-size: 1.9rem; color: var(--guinda); }
+  .result-who p { margin: 0; font-family: var(--font-ui); font-size: .95rem; color: var(--ink-secondary); line-height: 1.55; }
+  .score-box { text-align: center; background: var(--guinda); color: var(--white); border-radius: var(--radius-lg); padding: .9rem 1.8rem; min-width: 150px; }
+  .score-big { font-family: var(--font-display); font-size: 3.6rem; font-weight: 700; line-height: 1; display: block; }
+  .score-sub { font-family: var(--font-ui); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+  table.meta td:first-child { font-family: var(--font-ui); font-weight: 600; color: var(--guinda-dark); width: 40%; }
+
+  .cat-row { margin-bottom: 1.15rem; }
+  .cat-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: .9rem; margin-bottom: .35rem; }
+  .cat-head b { color: var(--ink); }
+  .cat-badge { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .6rem; border-radius: 999px; }
+  .cat-badge.ok { background: var(--guinda); color: var(--white); }
+  .cat-badge.low { background: var(--white); color: #B3261E; border: 1.5px solid #B3261E; }
+  .bar-track { height: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--guinda); border-radius: 999px; }
+  .bar-fill.low { background: var(--guinda-rule); }
+  .cat-hint { font-family: var(--font-ui); font-size: .82rem; color: var(--ink-secondary); margin-top: .35rem; font-style: italic; }
+
+  /* Ventana emergente */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(26,18,21,.55); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .modal { background: var(--white); border-radius: var(--radius-lg); border-top: 5px solid var(--guinda); max-width: 480px; width: 100%; padding: 1.6rem 1.7rem; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+  .modal h3 { color: var(--guinda); margin-bottom: .6rem; }
+  .modal p { font-size: 1rem; line-height: 1.6; }
+  .modal-actions { display: flex; gap: .75rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 1.2rem; }
+
+  .footer-brand { display: flex; align-items: center; gap: .75rem; }
+  .footer-brand img { height: 32px; width: auto; }
+
+  @media (max-width: 600px) {
+    .mixtle-tip { flex-direction: column; text-align: left; }
+    .q-card { padding: 1.2rem 1.1rem; }
+    .q-text { font-size: 1.4rem; }
+    .statusbar-inner { padding: .55rem 1rem; }
+    .score-box { width: 100%; }
+  }
+
+  /* Impresión / PDF del resultado */
+  @media print {
+    .statusbar, .no-print, .site-footer, .modal-backdrop { display: none !important; }
+    body.in-exam main, body.in-exam #hero { display: none !important; }
+    body.in-exam::before {
+      content: "La impresión no está disponible durante la evaluación.";
+      display: block; padding: 2rem; font-family: var(--font-ui); font-size: 1.2rem;
+    }
+    .result-card { box-shadow: none; }
+    .page-wrapper { padding-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="wm" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="logo-wrap"><img src="imagen1.png" alt="Mixtle, mascota del IEDEP"></div>
+  <div class="header-text">
+    <span class="inst-name">Instituto de Educación Digital del Estado de Puebla</span>
+    <span class="doc-title">Evaluación · Inglés para Ingeniería I</span>
+  </div>
+</header>
+
+<section class="class-hero" id="hero">
+  <div class="hero-inner">
+    <span class="class-label">Licenciatura en Sistemas Computacionales</span>
+    <h1>Evaluación del Tema 1.2</h1>
+    <span class="class-subtitle">Estructuras gramaticales esenciales · Tiempos verbales y voz pasiva</span>
+    <div class="meta-row">
+      <div class="meta-item">Asignatura<span>Inglés para Ingeniería I</span></div>
+      <div class="meta-item">Unidad<span>1 · Fundamentos del inglés técnico</span></div>
+      <div class="meta-item">Preguntas<span>10 de opción múltiple</span></div>
+      <div class="meta-item">Duración<span>15 minutos</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="statusbar" id="statusbar" hidden>
+  <div class="statusbar-inner">
+    <div class="stat">Pregunta<b id="barQ">1 / 10</b></div>
+    <div class="stat timer" id="barTimeBox">Tiempo restante<b id="barTime">15:00</b></div>
+    <div class="stat" id="barInfrBox">Infracciones<b id="barInfr">0</b></div>
+    <div class="stat">Intento<b id="barAtt">1</b></div>
+  </div>
+</div>
+
+<main class="page-wrapper">
+
+  <!-- ───────── INICIO ───────── -->
+  <section id="screen-start">
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, el mapache ingeniero">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.35rem;">Mixtle dice…</span>
+        <p>«¡Hola! No te preocupes: son preguntas sencillas sobre lo que vimos en clase. Lee con calma, confía en lo que aprendiste y recuerda que cada oración tiene pistas que te ayudan a elegir. ¡Mucho éxito!»</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-title">Antes de comenzar</span>
+      <ul class="rules">
+        <li>Esta evaluación tiene <strong>10 preguntas de opción múltiple</strong> sobre el Tema 1.2: presente simple, pasado simple, presente perfecto y voz pasiva.</li>
+        <li>Cada pregunta tiene <strong>una sola respuesta correcta</strong>.</li>
+        <li>Dispones de <strong>15 minutos</strong>. Puedes cambiar tus respuestas antes de finalizar.</li>
+        <li>Escribe tu nombre completo y presiona <strong>Comenzar</strong>.</li>
+      </ul>
+
+      <div style="margin-top:1.2rem;">
+        <label class="field-label" for="inName">Nombre completo (nombre y apellidos)</label>
+        <input class="field" id="inName" type="text" maxlength="60" autocomplete="off" spellcheck="false" placeholder="Ejemplo: María López Hernández">
+      </div>
+      <div style="margin-top:1rem;" id="codeWrap" hidden>
+        <label class="field-label" for="inCode">Código de acceso (te lo proporciona tu docente)</label>
+        <input class="field" id="inCode" type="password" maxlength="30" autocomplete="off">
+      </div>
+      <p class="field-err" id="startErr" hidden></p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" id="btnStart">Comenzar evaluación</button></div>
+    </div>
+  </section>
+
+  <!-- ───────── EVALUACIÓN ───────── -->
+  <section id="screen-exam" hidden>
+    <div class="q-card">
+      <span class="q-label" id="qLabel">Pregunta 1 de 10</span>
+      <p class="q-instr" id="qInstr"></p>
+      <p class="q-text" id="qText"></p>
+      <div class="options" id="qOpts"></div>
+    </div>
+
+    <div class="nav-row">
+      <button type="button" class="btn btn-secondary" id="btnPrev">Anterior</button>
+      <button type="button" class="btn btn-primary" id="btnNext">Siguiente</button>
+    </div>
+
+    <div class="qmap-wrap">
+      <span class="qmap-title">Mapa de preguntas</span>
+      <div class="qmap" id="qmap"></div>
+      <div class="qmap-foot">
+        <span>Respondidas: <strong id="ansCount">0</strong> de <strong id="ansTotal">10</strong></span>
+        <button type="button" class="btn btn-primary" id="btnFinish">Finalizar evaluación</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── RESULTADO ───────── -->
+  <section id="screen-result" hidden>
+    <div class="result-card">
+      <div class="result-top">
+        <img class="result-mascot" src="imagen2.png" alt="Mixtle">
+        <div class="result-who">
+          <span class="section-label">Resultado de la evaluación</span>
+          <h2 id="rName"></h2>
+          <p id="rMsg"></p>
+        </div>
+        <div class="score-box"><span class="score-big" id="rScore">0.0</span><span class="score-sub">de 10</span></div>
+      </div>
+
+      <table class="meta">
+        <tbody>
+          <tr><td>Tema evaluado</td><td>1.2 Estructuras gramaticales esenciales</td></tr>
+          <tr><td>Aciertos</td><td id="rHits"></td></tr>
+          <tr><td>Fecha y hora</td><td id="rDate"></td></tr>
+          <tr><td>Tiempo utilizado</td><td id="rTime"></td></tr>
+          <tr><td>Intentos</td><td id="rAtt"></td></tr>
+          <tr><td>Infracciones registradas</td><td id="rInf"></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout note" id="rNote" hidden><p></p></div>
+
+      <h3 style="margin-top:1.6rem;">Desempeño por tema</h3>
+      <div id="rCats"></div>
+
+      <div class="no-print">
+        <div class="btn-row"><button type="button" class="btn btn-primary" id="btnPdf">Descargar resultado en PDF</button></div>
+        <p class="text-muted" style="margin-top:.8rem;">En la ventana que se abre, elige «Guardar como PDF» y envía el archivo a tu docente.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer no-print">
+  <div class="footer-brand">
+    <img src="imagen1.png" alt="Mixtle">
+    <span><strong>IEDEP</strong> · Instituto de Educación Digital del Estado de Puebla</span>
+  </div>
+  <span>Inglés para Ingeniería I · Mtro. José Armando Vera Rodríguez</span>
+</footer>
+
+<div class="modal-backdrop" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <div class="modal-actions" id="mActions"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN (ajustable por el docente)
+   ============================================================ */
+const CFG = {
+  MINUTOS: 15,            // duración de la evaluación
+  MAX_INFRACCIONES: 5,    // al llegar a este número se envía automáticamente (0 = no enviar nunca)
+  CODIGO_DOCENTE: "",     // si se escribe un código, el alumno debe capturarlo para comenzar ("" = desactivado)
+  STORAGE_KEY: "iedep_ing_t12_eval_v1"
+};
+
+/* Banco de preguntas (codificado) */
+const DATA = (function (b64) {
+  const bin = atob(b64);
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder("utf-8").decode(bytes));
+})("W3siYyI6ICJQcmVzZW50ZSBzaW1wbGUiLCAiaSI6ICJDb21wbGV0YSBsYSBvcmFjacOzbi4gUGlzdGE6IGV2ZXJ5IGRheSBzaWduaWZpY2Egwqt0b2RvcyBsb3MgZMOtYXPCuy4iLCAidCI6ICJUaGUgc3R1ZGVudCBfX19fIGNvZGUgZXZlcnkgZGF5LiIsICJvIjogWyJ3cml0ZXMiLCAid3JpdGUiLCAid3JvdGUiXSwgImlkIjogMX0sIHsiYyI6ICJQcmVzZW50ZSBzaW1wbGUiLCAiaSI6ICJDb21wbGV0YSBsYSBvcmFjacOzbi4gUGlzdGE6IHNlIGhhYmxhIGRlIGFsZ28gcXVlIHBhc2Egc2llbXByZS4iLCAidCI6ICJUaGUgc2VydmVyIF9fX18gZGF0YS4iLCAibyI6IFsic3RvcmVzIiwgInN0b3JlIiwgInN0b3JlZCJdLCAiaWQiOiAyfSwgeyJjIjogIlByZXNlbnRlIHNpbXBsZSIsICJpIjogIsK/Q3XDoWwgb3JhY2nDs24gZXN0w6EgZW4gcHJlc2VudGUgc2ltcGxlPyIsICJ0IjogIiIsICJvIjogWyJUaGUgYXBwIG9wZW5zIHF1aWNrbHkuIiwgIlRoZSBhcHAgb3BlbmVkIHF1aWNrbHkuIiwgIlRoZSBhcHAgaGFzIG9wZW5lZCBxdWlja2x5LiJdLCAiaWQiOiAzfSwgeyJjIjogIlBhc2FkbyBzaW1wbGUiLCAiaSI6ICJDb21wbGV0YSBsYSBvcmFjacOzbi4gUGlzdGE6IHllc3RlcmRheSBzaWduaWZpY2EgwqtheWVywrsuIiwgInQiOiAiVGhlIHRlYW0gX19fXyB0aGUgYnVnIHllc3RlcmRheS4iLCAibyI6IFsiZml4ZWQiLCAiZml4IiwgImZpeGVzIl0sICJpZCI6IDR9LCB7ImMiOiAiUGFzYWRvIHNpbXBsZSIsICJpIjogIkNvbXBsZXRhIGxhIG9yYWNpw7NuLiBQaXN0YTogbGFzdCBuaWdodCBzaWduaWZpY2Egwqthbm9jaGXCuy4iLCAidCI6ICJUaGUgc3lzdGVtIF9fX18gbGFzdCBuaWdodC4iLCAibyI6IFsiY3Jhc2hlZCIsICJjcmFzaCIsICJjcmFzaGVzIl0sICJpZCI6IDV9LCB7ImMiOiAiUGFzYWRvIHNpbXBsZSIsICJpIjogIsK/UXXDqSBwYWxhYnJhIGluZGljYSBwYXNhZG8/IFBpc3RhOiBwaWVuc2EgZW4gwqtheWVywrsuIiwgInQiOiAiIiwgIm8iOiBbInllc3RlcmRheSIsICJldmVyeSBkYXkiLCAidG9tb3Jyb3ciXSwgImlkIjogNn0sIHsiYyI6ICJQcmVzZW50ZSBwZXJmZWN0byIsICJpIjogIkNvbXBsZXRhIGxhIG9yYWNpw7NuLiBQaXN0YTogY29uIGhlLCBzaGUgbyBpdCBzZSB1c2EgaGFzLiIsICJ0IjogIlRoZSB0ZWFtIF9fX18gZmluaXNoZWQgdGhlIHByb2plY3QuIiwgIm8iOiBbImhhcyIsICJoYXZlIiwgIndhcyJdLCAiaWQiOiA3fSwgeyJjIjogIlByZXNlbnRlIHBlcmZlY3RvIiwgImkiOiAiQ29tcGxldGEgbGEgb3JhY2nDs24uIFBpc3RhOiBjb24gSSBvIHdlIHNlIHVzYSBoYXZlLiIsICJ0IjogIldlIF9fX18gZmluaXNoZWQgdGhlIGxhYi4iLCAibyI6IFsiaGF2ZSIsICJoYXMiLCAiaXMiXSwgImlkIjogOH0sIHsiYyI6ICJWb3ogcGFzaXZhIiwgImkiOiAiQ29tcGxldGEgbGEgb3JhY2nDs24uIFBpc3RhOiBlbCBjw7NkaWdvIMKrZXMgcHJvYmFkb8K7IChpcyB0ZXN0ZWQpLiIsICJ0IjogIlRoZSBjb2RlIF9fX18gdGVzdGVkIGV2ZXJ5IGRheS4iLCAibyI6IFsiaXMiLCAiYXJlIiwgIndlcmUiXSwgImlkIjogOX0sIHsiYyI6ICJWb3ogcGFzaXZhIiwgImkiOiAiwr9DdcOhbCBvcmFjacOzbiBlc3TDoSBlbiB2b3ogcGFzaXZhPyBQaXN0YTogYnVzY2Egd2FzICsgcGFydGljaXBpby4iLCAidCI6ICIiLCAibyI6IFsiVGhlIGFwcCB3YXMgZGVwbG95ZWQuIiwgIlRoZSB0ZWFtIGRlcGxveWVkIHRoZSBhcHAuIiwgIlRoZSB0ZWFtIGRlcGxveXMgdGhlIGFwcC4iXSwgImlkIjogMTB9XQ==");
+
+const CATS = ["Presente simple", "Pasado simple", "Presente perfecto", "Voz pasiva"];
+const HINTS = {
+  "Presente simple": "Recuerda: con he / she / it el verbo lleva -s (the server processes).",
+  "Pasado simple": "Recuerda: los verbos regulares terminan en -ed (fixed, deployed).",
+  "Presente perfecto": "Recuerda: have / has + participio pasado (has updated).",
+  "Voz pasiva": "Recuerda: to be + participio pasado (is tested, was deployed)."
+};
+const LETTERS = ["A", "B", "C", "D"];
+
+const $ = id => document.getElementById(id);
+let S = null;            // estado persistente
+let run = null;          // estado de la corrida actual
+let examActive = false, away = false, unloading = false, timerId = null;
+
+/* ── Almacenamiento ── */
+function loadState() {
+  try { const r = localStorage.getItem(CFG.STORAGE_KEY); return r ? JSON.parse(r) : null; }
+  catch (e) { return null; }
+}
+function persist() {
+  try { localStorage.setItem(CFG.STORAGE_KEY, JSON.stringify(S)); } catch (e) {}
+}
+
+/* ── Aleatorización ── */
+function rnd() {
+  try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296; }
+  catch (e) { return Math.random(); }
+}
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function buildRun() {
+  const questions = shuffle(DATA).map(q => ({
+    id: q.id, c: q.c, i: q.i, t: q.t,
+    opts: shuffle(q.o.map((txt, idx) => ({ txt: txt, ok: idx === 0 })))
+  }));
+  return { questions: questions, answers: {}, cur: 0 };
+}
+
+/* ── Pantallas ── */
+function show(name) {
+  ["start", "exam", "result"].forEach(n => { $("screen-" + n).hidden = (n !== name); });
+  $("hero").hidden = (name !== "start");
+  $("statusbar").hidden = (name !== "exam");
+  document.body.classList.toggle("in-exam", name === "exam");
+  document.body.classList.toggle("in-result", name === "result");
+  window.scrollTo(0, 0);
+}
+
+function initWatermark(name) {
+  const wm = $("wm");
+  wm.innerHTML = "";
+  const inner = document.createElement("div");
+  inner.className = "wm-inner";
+  const text = name.toUpperCase();
+  for (let r = 0; r < 18; r++) {
+    const row = document.createElement("div");
+    row.className = "wm-row";
+    if (r % 2) row.style.marginLeft = "-11rem";
+    for (let c = 0; c < 9; c++) {
+      const s = document.createElement("span");
+      s.textContent = text;
+      row.appendChild(s);
+    }
+    inner.appendChild(row);
+  }
+  wm.appendChild(inner);
+}
+
+/* ── Ventana emergente ── */
+function showModal(title, text, buttons) {
+  $("mTitle").textContent = title;
+  $("mText").textContent = text;
+  const act = $("mActions");
+  act.innerHTML = "";
+  buttons.forEach(b => {
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "btn " + (b.secondary ? "btn-secondary" : "btn-primary");
+    x.textContent = b.label;
+    x.addEventListener("click", () => { closeModal(); if (b.fn) b.fn(); });
+    act.appendChild(x);
+  });
+  $("modal").hidden = false;
+}
+function closeModal() { $("modal").hidden = true; }
+
+/* ── Inicio ── */
+function setupStart() {
+  $("codeWrap").hidden = !CFG.CODIGO_DOCENTE;
+  show("start");
+}
+function startError(msg) {
+  const e = $("startErr");
+  e.textContent = msg; e.hidden = false;
+}
+$("btnStart").addEventListener("click", () => {
+  const name = $("inName").value.trim().replace(/\s+/g, " ");
+  $("startErr").hidden = true;
+  if (name.length < 5 || !/\S+\s+\S+/.test(name)) { startError("Escribe tu nombre completo (nombre y apellido)."); return; }
+  if (CFG.CODIGO_DOCENTE && $("inCode").value.trim() !== CFG.CODIGO_DOCENTE) { startError("El código de acceso no es correcto."); return; }
+  S = { name: name, attempts: 1, infractions: 0, startTime: Date.now(), started: true, finished: false, result: null };
+  persist();
+  beginExam(false);
+});
+$("inName").addEventListener("keydown", e => { if (e.key === "Enter") $("btnStart").click(); });
+
+/* ── Evaluación ── */
+function beginExam(isReload) {
+  run = buildRun();
+  examActive = true;
+  away = false;
+  initWatermark(S.name);
+  show("exam");
+  $("ansTotal").textContent = run.questions.length;
+  renderQ();
+  tick();
+  clearInterval(timerId);
+  timerId = setInterval(tick, 500);
+  if (isReload && examActive) {
+    showModal("Se actualizó la página",
+      "Se detectó que la página se actualizó, por lo que se inició el intento número " + S.attempts +
+      ". Tus respuestas anteriores se reiniciaron y el tiempo sigue corriendo.",
+      [{ label: "Entendido" }]);
+  }
+}
+
+function tick() {
+  if (!examActive) return;
+  const left = CFG.MINUTOS * 60000 - (Date.now() - S.startTime);
+  if (left <= 0) { $("barTime").textContent = "00:00"; finish("tiempo"); return; }
+  const s = Math.ceil(left / 1000);
+  $("barTime").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+  $("barTimeBox").classList.toggle("danger", left < 120000);
+}
+
+function updateBar() {
+  $("barQ").textContent = (run.cur + 1) + " / " + run.questions.length;
+  $("barInfr").textContent = S.infractions + (CFG.MAX_INFRACCIONES > 0 ? " / " + CFG.MAX_INFRACCIONES : "");
+  $("barInfrBox").classList.toggle("warn", S.infractions > 0);
+  $("barAtt").textContent = S.attempts;
+  $("ansCount").textContent = Object.keys(run.answers).length;
+}
+
+function renderQ() {
+  const q = run.questions[run.cur];
+  $("qLabel").textContent = "Pregunta " + (run.cur + 1) + " de " + run.questions.length;
+  $("qInstr").textContent = q.i;
+  const t = $("qText");
+  t.innerHTML = "";
+  if (q.t) {
+    const parts = q.t.split("____");
+    parts.forEach((p, i) => {
+      t.appendChild(document.createTextNode(p));
+      if (i < parts.length - 1) { const b = document.createElement("span"); b.className = "blank"; t.appendChild(b); }
+    });
+    t.hidden = false;
+  } else { t.hidden = true; }
+
+  const box = $("qOpts");
+  box.innerHTML = "";
+  q.opts.forEach((o, idx) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt" + (run.answers[q.id] === idx ? " sel" : "");
+    const l = document.createElement("span"); l.className = "opt-letter"; l.textContent = LETTERS[idx];
+    const tx = document.createElement("span"); tx.className = "opt-text"; tx.textContent = o.txt;
+    b.appendChild(l); b.appendChild(tx);
+    b.addEventListener("click", () => { run.answers[q.id] = idx; renderQ(); });
+    box.appendChild(b);
+  });
+
+  $("btnPrev").disabled = (run.cur === 0);
+  $("btnNext").disabled = (run.cur === run.questions.length - 1);
+
+  const map = $("qmap");
+  map.innerHTML = "";
+  run.questions.forEach((qq, i) => {
+    const d = document.createElement("button");
+    d.type = "button";
+    d.className = "qdot" + (run.answers[qq.id] !== undefined ? " done" : "") + (i === run.cur ? " cur" : "");
+    d.textContent = i + 1;
+    d.addEventListener("click", () => { run.cur = i; renderQ(); });
+    map.appendChild(d);
+  });
+  updateBar();
+}
+$("btnPrev").addEventListener("click", () => { if (run.cur > 0) { run.cur--; renderQ(); } });
+$("btnNext").addEventListener("click", () => { if (run.cur < run.questions.length - 1) { run.cur++; renderQ(); } });
+
+$("btnFinish").addEventListener("click", () => {
+  const pend = run.questions.length - Object.keys(run.answers).length;
+  if (pend > 0) {
+    showModal("Tienes preguntas sin responder",
+      "Te faltan " + pend + " pregunta" + (pend === 1 ? "" : "s") + " por responder. ¿Deseas enviar la evaluación de todos modos?",
+      [{ label: "Seguir revisando", secondary: true }, { label: "Enviar ahora", fn: () => finish("manual") }]);
+  } else {
+    showModal("¿Enviar evaluación?",
+      "Una vez enviada no podrás modificar tus respuestas.",
+      [{ label: "Seguir revisando", secondary: true }, { label: "Enviar ahora", fn: () => finish("manual") }]);
+  }
+});
+
+/* ── Cierre y resultado ── */
+function finish(reason) {
+  if (!examActive) return;
+  examActive = false;
+  clearInterval(timerId);
+  closeModal();
+  const total = run.questions.length;
+  let correct = 0;
+  const cats = {};
+  run.questions.forEach(q => {
+    const ch = run.answers[q.id];
+    const ok = (ch !== undefined && q.opts[ch].ok);
+    cats[q.c] = cats[q.c] || { c: 0, t: 0 };
+    cats[q.c].t++;
+    if (ok) { correct++; cats[q.c].c++; }
+  });
+  const used = Math.min(Date.now() - S.startTime, CFG.MINUTOS * 60000);
+  const res = {
+    name: S.name, correct: correct, total: total,
+    score: Math.round(correct / total * 100) / 10,
+    cats: cats, attempts: S.attempts, infractions: S.infractions,
+    used: used, ended: reason, date: new Date().toISOString()
+  };
+  S.finished = true; S.result = res; persist();
+  showResult(res);
+}
+
+function fmtTime(ms) {
+  const s = Math.round(ms / 1000);
+  return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0") + " min";
+}
+
+function showResult(res) {
+  initWatermark(res.name);
+  document.title = "Evaluación Tema 1.2 - " + res.name;
+  $("rName").textContent = res.name;
+  $("rScore").textContent = res.score.toFixed(1);
+  $("rHits").textContent = res.correct + " de " + res.total;
+  $("rDate").textContent = new Date(res.date).toLocaleString("es-MX", { dateStyle: "long", timeStyle: "short" });
+  $("rTime").textContent = fmtTime(res.used);
+  $("rAtt").textContent = res.attempts;
+  $("rInf").textContent = res.infractions;
+
+  let msg;
+  if (res.score >= 9) msg = "¡Excelente trabajo! Dominas muy bien los tiempos verbales y la voz pasiva.";
+  else if (res.score >= 6) msg = "¡Buen trabajo! Aprobaste la evaluación. Con un poco más de práctica lo dominarás por completo.";
+  else msg = "Todavía puedes mejorar. Repasa los temas marcados abajo y sigue practicando; ¡tú puedes!";
+  $("rMsg").textContent = msg;
+
+  const note = $("rNote");
+  if (res.ended === "tiempo") { note.querySelector("p").textContent = "La evaluación se envió automáticamente porque se terminó el tiempo."; note.hidden = false; }
+  else if (res.ended === "infracciones") { note.querySelector("p").textContent = "La evaluación se envió automáticamente al alcanzar el límite de infracciones permitido."; note.hidden = false; }
+  else note.hidden = true;
+
+  const box = $("rCats");
+  box.innerHTML = "";
+  CATS.forEach(name => {
+    const c = res.cats[name]; if (!c) return;
+    const pct = Math.round(c.c / c.t * 100);
+    const low = pct < 70;
+    const row = document.createElement("div"); row.className = "cat-row";
+    const head = document.createElement("div"); head.className = "cat-head";
+    const b = document.createElement("b"); b.textContent = name + " — " + c.c + " de " + c.t;
+    const badge = document.createElement("span"); badge.className = "cat-badge " + (low ? "low" : "ok"); badge.textContent = low ? "Repasar" : "Dominado";
+    head.appendChild(b); head.appendChild(badge);
+    const track = document.createElement("div"); track.className = "bar-track";
+    const fill = document.createElement("div"); fill.className = "bar-fill" + (low ? " low" : ""); fill.style.width = pct + "%";
+    track.appendChild(fill);
+    row.appendChild(head); row.appendChild(track);
+    if (low) { const h = document.createElement("div"); h.className = "cat-hint"; h.textContent = HINTS[name]; row.appendChild(h); }
+    box.appendChild(row);
+  });
+  show("result");
+}
+$("btnPdf").addEventListener("click", () => window.print());
+
+/* ============================================================
+   Control durante la evaluación
+   ============================================================ */
+function leave() {
+  if (!examActive || away || unloading) return;
+  away = true;
+  S.infractions++; persist(); updateBar();
+  if (CFG.MAX_INFRACCIONES > 0 && S.infractions >= CFG.MAX_INFRACCIONES) finish("infracciones");
+}
+function back() {
+  if (!away) return;
+  away = false;
+  if (!examActive) return;
+  showModal("Saliste de la evaluación",
+    "Se detectó que abandonaste la ventana de la evaluación. Infracciones registradas: " + S.infractions +
+    (CFG.MAX_INFRACCIONES > 0 ? " de " + CFG.MAX_INFRACCIONES : "") + ".",
+    [{ label: "Continuar" }]);
+}
+window.addEventListener("blur", leave);
+window.addEventListener("focus", back);
+document.addEventListener("visibilitychange", () => { document.hidden ? leave() : back(); });
+window.addEventListener("beforeunload", () => { unloading = true; });
+window.addEventListener("pagehide", () => { unloading = true; });
+
+function inField(e) {
+  const el = (e.target && e.target.nodeType === 1) ? e.target : (e.target && e.target.parentElement);
+  return !!(el && el.tagName === "INPUT");
+}
+["copy", "cut", "paste", "dragstart", "selectstart", "contextmenu"].forEach(ev => {
+  document.addEventListener(ev, e => { if (!inField(e)) e.preventDefault(); });
+});
+
+document.addEventListener("keydown", e => {
+  if (!examActive) return;
+  const k = (e.key || "").toLowerCase();
+  const ctrl = e.ctrlKey || e.metaKey;
+  if (ctrl && ["c", "x", "v", "a", "s", "u", "p"].includes(k)) { e.preventDefault(); return; }
+  if (e.key === "F12" || (ctrl && e.shiftKey && ["i", "j", "c"].includes(k))) { e.preventDefault(); }
+});
+document.addEventListener("keyup", e => {
+  if (!examActive || e.key !== "PrintScreen") return;
+  try { navigator.clipboard.writeText(" "); } catch (err) {}
+  S.infractions++; persist(); updateBar();
+  if (CFG.MAX_INFRACCIONES > 0 && S.infractions >= CFG.MAX_INFRACCIONES) { finish("infracciones"); return; }
+  showModal("Captura de pantalla detectada",
+    "Se detectó el uso de la tecla de captura de pantalla. Infracciones registradas: " + S.infractions +
+    (CFG.MAX_INFRACCIONES > 0 ? " de " + CFG.MAX_INFRACCIONES : "") + ".",
+    [{ label: "Continuar" }]);
+});
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+(function boot() {
+  S = loadState();
+  if (S && S.finished && S.result) { document.body.classList.add("in-result"); showResult(S.result); return; }
+  if (S && S.started) {
+    S.attempts = (S.attempts || 1) + 1;   // la página se actualizó con la evaluación en curso
+    persist();
+    beginExam(true);
+    return;
+  }
+  S = null;
+  setupStart();
+})();
+</script>
+</body>
+</html>

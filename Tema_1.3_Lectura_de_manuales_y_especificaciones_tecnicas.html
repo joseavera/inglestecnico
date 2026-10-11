@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 1.3 — Lectura de manuales y especificaciones técnicas | Inglés para Ingeniería I</title>
+<meta name="description" content="Material de clase — Inglés para Ingeniería I, Unidad 1, Tema 1.3: cómo leer manuales, guías de instalación y fichas técnicas en inglés, aplicado a Sistemas Computacionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ── Extensiones propias de esta clase (no modifican base.css) ── */
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+
+  code.inline {
+    font-family: var(--font-mono);
+    font-size: .86em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .05rem .35rem;
+    color: var(--guinda-dark);
+  }
+
+  /* Mixtle */
+  .mixtle-tip {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    background: var(--guinda-light); border: 1px solid #D8A8BA;
+    border-radius: var(--radius-lg); padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .mixtle-tip img { width: 110px; height: auto; flex-shrink: 0; }
+  .mixtle-bubble p { font-size: .97rem; line-height: 1.7; color: var(--ink); margin-bottom: 0; }
+  .mixtle-tip.small img { width: 80px; }
+  .mixtle-tip.reverse { flex-direction: row-reverse; }
+  @media (max-width: 600px) {
+    .mixtle-tip, .mixtle-tip.reverse { flex-direction: column; align-items: center; }
+  }
+
+  /* Idea clave en una línea */
+  .big-idea {
+    text-align: center; margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem; border-radius: var(--radius-lg);
+    background: var(--guinda); color: var(--white);
+    font-family: var(--font-display); font-size: 1.45rem; line-height: 1.35; font-weight: 600;
+  }
+  .big-idea small { display:block; margin-top:.4rem; font-family: var(--font-ui); font-size: .8rem; font-weight: 500; letter-spacing: .04em; opacity: .85; }
+
+  /* Comparación novela vs manual */
+  .vs-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+  .vs-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.2rem; background: var(--off-white); }
+  .vs-card.good { border-color: var(--guinda); background: var(--guinda-light); }
+  .vs-card h3 { font-family: var(--font-ui); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--guinda); margin-bottom: .5rem; }
+  .vs-card p { font-size: .95rem; margin: 0; }
+  .vs-card svg { width: 38px; height: 38px; color: var(--guinda); margin-bottom: .4rem; }
+  @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } }
+
+  /* Anatomía de un manual */
+  .anatomy { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; margin: 1.25rem 0; }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .manual-mock {
+    background: var(--white); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    padding: 1.1rem 1.2rem 1.3rem; position: relative;
+  }
+  .mock-bar { display:flex; gap:.35rem; margin-bottom:.8rem; }
+  .mock-bar i { width:9px; height:9px; border-radius:50%; background: var(--border-strong); display:block; }
+  .mock-part { position: relative; padding: .55rem .7rem .55rem 2.4rem; margin-bottom: .55rem; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--off-white); }
+  .mock-part .n {
+    position:absolute; left:.55rem; top:.55rem; width:1.35rem; height:1.35rem; border-radius:50%;
+    background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mock-part b { font-family: var(--font-ui); font-size: .82rem; color: var(--guinda-dark); display:block; }
+  .mock-part span { font-family: var(--font-mono); font-size: .76rem; color: var(--ink-secondary); display:block; line-height:1.5; }
+  .mock-part.warn { border-color:#C98A00; background:#FFF8E6; }
+  .mock-part.warn .n { background:#B37700; }
+  .mock-part.title-part b { font-family: var(--font-display); font-size: 1.15rem; }
+  .legend { list-style:none; margin:0; padding:0; }
+  .legend li { display:flex; gap:.7rem; padding:.55rem 0; border-bottom: 1px solid var(--border); font-size:.93rem; line-height:1.5; }
+  .legend li:last-child { border-bottom:none; }
+  .legend .n { flex:0 0 1.5rem; height:1.5rem; border-radius:50%; background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:.15rem; }
+  .legend .n.w { background:#B37700; }
+  .legend em { color: var(--guinda-dark); }
+
+  /* Chips de palabras */
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0 1.1rem; }
+  .chip {
+    font-family: var(--font-mono); font-size:.84rem; padding:.3rem .75rem;
+    background: var(--guinda-light); border:1px solid #D8A8BA; border-radius:999px; color: var(--guinda-dark);
+  }
+  .chip small { font-family: var(--font-ui); font-size:.7rem; color: var(--ink-secondary); margin-left:.35rem; }
+
+  .pron { font-family: var(--font-ui); font-size:.8rem; color: var(--ink-secondary); font-style: italic; }
+
+  /* Avisos tipo manual */
+  .alerts { display:grid; gap:.8rem; margin: 1.25rem 0; }
+  .alert-row { display:grid; grid-template-columns: 112px 1fr; gap: 1rem; align-items:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem 1rem; background: var(--white); }
+  .alert-row .lbl { display:flex; align-items:center; gap:.45rem; font-family: var(--font-ui); font-weight:700; font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; }
+  .alert-row .lbl svg { width:22px; height:22px; flex-shrink:0; }
+  .alert-row p { font-size:.93rem; line-height:1.55; margin:0; }
+  .alert-row .ex { display:block; font-family: var(--font-mono); font-size:.82rem; margin-top:.3rem; color: var(--ink); }
+  .alert-row.note    { border-left:5px solid var(--guinda);   } .alert-row.note .lbl    { color: var(--guinda); }
+  .alert-row.tip     { border-left:5px solid #1F7A5C;         } .alert-row.tip .lbl     { color:#1F7A5C; }
+  .alert-row.warning { border-left:5px solid #B37700;         } .alert-row.warning .lbl { color:#9A6600; }
+  .alert-row.caution { border-left:5px solid #B3261E;         } .alert-row.caution .lbl { color:#B3261E; }
+  @media (max-width: 600px) { .alert-row { grid-template-columns: 1fr; gap:.4rem; } }
+
+  /* Pasos tipo tarjeta */
+  .cmd-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:.8rem; margin:1.2rem 0; }
+  .cmd { border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .95rem; background: var(--off-white); }
+  .cmd .v { font-family: var(--font-mono); font-weight:500; font-size:1.02rem; color: var(--guinda); }
+  .cmd .es { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); text-transform:uppercase; letter-spacing:.05em; }
+  .cmd .eg { font-size:.88rem; line-height:1.45; margin-top:.35rem; }
+
+  .no-do {
+    border:2px solid #B3261E; background:#FFF3F2; border-radius: var(--radius-md); padding:.8rem 1.1rem; margin:1rem 0;
+    font-family: var(--font-ui); font-size:.92rem;
+  }
+  .no-do b { color:#B3261E; }
+
+  /* Ficha técnica */
+  .spec-card { border:1px solid var(--border-strong); border-radius: var(--radius-lg); overflow:hidden; box-shadow: var(--shadow-md); margin:1.25rem 0; background: var(--white); }
+  .spec-head { background: var(--guinda); color: var(--white); padding:.9rem 1.3rem; display:flex; align-items:center; gap:.9rem; }
+  .spec-head svg { width:34px; height:34px; flex-shrink:0; }
+  .spec-head b { font-family: var(--font-display); font-size:1.35rem; display:block; line-height:1.1; }
+  .spec-head span { font-family: var(--font-ui); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; opacity:.85; }
+  .spec-row { display:grid; grid-template-columns: 1.1fr 1.2fr 1.1fr; gap:.8rem; padding:.55rem 1.3rem; border-bottom:1px solid var(--border); align-items:baseline; font-size:.93rem; }
+  .spec-row:nth-child(even) { background: var(--surface); }
+  .spec-row:last-child { border-bottom:none; }
+  .spec-row .k { font-family: var(--font-ui); font-weight:600; font-size:.82rem; color: var(--guinda-dark); }
+  .spec-row .v { font-family: var(--font-mono); font-size:.86rem; }
+  .spec-row .es { font-size:.86rem; color: var(--ink-secondary); }
+  .spec-row.hd { background: var(--guinda-light); font-family: var(--font-ui); font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color: var(--guinda); }
+  @media (max-width: 600px) {
+    .spec-row { grid-template-columns: 1fr; gap:.1rem; padding:.6rem 1rem; }
+    .spec-row.hd { display:none; }
+  }
+
+  .units { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:.7rem; margin:1rem 0; }
+  .unit { text-align:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .5rem; background: var(--off-white); }
+  .unit b { display:block; font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); }
+  .unit span { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); line-height:1.35; display:block; margin-top:.15rem; }
+
+  .phrase-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap:.7rem; margin:1rem 0; }
+  .phrase { border:1px solid var(--border); border-radius: var(--radius-md); padding:.75rem .95rem; background: var(--white); }
+  .phrase b { font-family: var(--font-mono); font-size:.92rem; color: var(--guinda); display:block; }
+  .phrase span { font-size:.88rem; color: var(--ink-secondary); }
+
+  /* Estrategia: 3 pasos */
+  .flow { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin:1.4rem 0; position:relative; }
+  .flow-step { border:1px solid var(--border-strong); border-radius: var(--radius-lg); padding:1.2rem 1.1rem 1.1rem; background: var(--white); text-align:center; position:relative; box-shadow: var(--shadow-sm); }
+  .flow-step svg { width:48px; height:48px; color: var(--guinda); margin-bottom:.4rem; }
+  .flow-step .num { position:absolute; top:-.7rem; left:50%; transform:translateX(-50%); background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700; padding:.15rem .7rem; border-radius:999px; letter-spacing:.06em; }
+  .flow-step h3 { font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); margin-bottom:.1rem; }
+  .flow-step .es { font-family: var(--font-ui); font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-secondary); margin-bottom:.5rem; display:block; }
+  .flow-step p { font-size:.9rem; line-height:1.55; margin:0; }
+  .flow-step .code-like { display:block; margin-top:.6rem; font-family: var(--font-mono); font-size:.78rem; color: var(--guinda-dark); background: var(--guinda-light); border-radius: var(--radius-sm); padding:.3rem .5rem; }
+  @media (max-width: 760px) { .flow { grid-template-columns: 1fr; gap:1.4rem; } }
+
+  /* Manual de ejemplo (changelog-like) */
+  .doc-sample { font-family: var(--font-mono); font-size:.88rem; line-height:1.7; background: var(--off-white); border:1px solid var(--border); border-radius: var(--radius-md); padding: 1rem 1.2rem; margin: .8rem 0 1.2rem; }
+  .doc-sample .h { font-weight:700; color: var(--guinda); display:block; margin-top:.6rem; }
+  .doc-sample .h:first-child { margin-top:0; }
+  .doc-sample .w { color:#9A6600; font-weight:700; }
+  .doc-sample .n { color: var(--guinda-dark); font-weight:700; }
+
+  /* Ejercicios interactivos */
+  .ex-item { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; padding:.55rem .8rem; margin-bottom:.5rem; border:1px solid var(--border); border-radius: var(--radius-md); background: var(--white); }
+  .ex-item .q { flex: 1 1 220px; font-size:.95rem; line-height:1.5; }
+  .ex-item .q code { font-family: var(--font-mono); font-size:.88rem; color: var(--guinda-dark); }
+  .ex-item select, .ex-item .tf label { font-family: var(--font-ui); font-size:.88rem; }
+  .ex-item select { padding:.4rem .5rem; border:1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); min-width: 190px; }
+  .ex-item.num select { min-width: 70px; }
+  .ex-item .tf { display:flex; gap:1rem; }
+  .ex-item .tf label { display:flex; align-items:center; gap:.35rem; cursor:pointer; }
+  .ex-item.ok  { border-color:#1F7A5C; background:#EEF8F3; }
+  .ex-item.bad { border-color:#B3261E; background:#FFF3F2; }
+  .ex-item .mark { font-family: var(--font-ui); font-size:.8rem; font-weight:700; min-width: 6.5rem; }
+  .ex-item.ok .mark { color:#1F7A5C; } .ex-item.bad .mark { color:#B3261E; }
+  .ex-actions { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:.9rem; }
+  .btn { font-family: var(--font-ui); font-size:.85rem; font-weight:600; padding:.55rem 1.1rem; border-radius: var(--radius-md); cursor:pointer; border:1px solid var(--guinda); background: var(--guinda); color: var(--white); }
+  .btn.ghost { background: var(--white); color: var(--guinda); }
+  .btn:hover { filter: brightness(1.1); }
+  .ex-score { font-family: var(--font-ui); font-weight:700; color: var(--guinda); font-size:.92rem; }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.25rem 0; }
+  .table-scroll table { margin: 0; min-width: 480px; }
+
+  .footer-brand { display: flex; align-items: center; gap: .75rem; }
+  .footer-brand img { height: 32px; width: auto; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap"><img src="imagen1.png" alt="Mixtle, mascota del IEDEP"></div>
+  <div class="header-text">
+    <span class="inst-name">Instituto de Educación Digital del Estado de Puebla</span>
+    <span class="doc-title">Material de clase · Inglés para Ingeniería I</span>
+  </div>
+</header>
+
+<section class="class-hero">
+  <div class="hero-inner">
+    <span class="class-label">Licenciatura en Sistemas Computacionales</span>
+    <h1>Tema 1.3 — Lectura de manuales y especificaciones técnicas</h1>
+    <span class="class-subtitle">Unidad 1: Fundamentos del inglés técnico · Cómo leer guías de instalación y fichas técnicas de equipos y software</span>
+    <div class="meta-row">
+      <div class="meta-item">Programa educativo<span>Lic. en Sistemas Computacionales</span></div>
+      <div class="meta-item">Asignatura<span>Inglés para Ingeniería I</span></div>
+      <div class="meta-item">Unidad<span>1 · Fundamentos del inglés técnico</span></div>
+      <div class="meta-item">Tema<span>1.3 Lectura de manuales y especificaciones técnicas</span></div>
+      <div class="meta-item">Fecha<span>11 de octubre de 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="page-wrapper">
+
+  <!-- ═════════ COMPETENCIAS ═════════ -->
+  <section class="section" id="competencias">
+    <h2 class="section-title">Competencias a desarrollar</h2>
+    <div class="competency-card">
+      <span class="comp-num">01</span>
+      <div class="comp-text"><strong>Identificar</strong> las partes de un manual o guía de instalación en inglés (requisitos, pasos, avisos y solución de problemas).</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">02</span>
+      <div class="comp-text"><strong>Reconocer</strong> el vocabulario y los verbos de instrucción más comunes en manuales de software y equipos de cómputo.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">03</span>
+      <div class="comp-text"><strong>Interpretar</strong> una ficha técnica (<em>spec sheet</em>) de una computadora o programa para encontrar datos clave como memoria, almacenamiento y requisitos.</div>
+    </div>
+  </section>
+
+  <!-- ═════════ PUNTO DE PARTIDA ═════════ -->
+  <section class="section" id="analogia">
+    <h2 class="section-title">Punto de partida: un manual no se lee como una novela</h2>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, el mapache ingeniero, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«¿Alguna vez leíste <em>todo</em> el código de un programa antes de ejecutarlo? Seguro que no: buscas la función que necesitas, la lees y la pruebas. Con un manual pasa lo mismo. <strong>No tienes que entender cada palabra en inglés.</strong> Solo necesitas saber <strong>dónde buscar</strong> y <strong>qué palabras clave mirar</strong>. Hoy aprenderás justo eso. ¡Vamos paso a paso!»</p>
+      </div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-card">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h14a4 4 0 0 1 4 4v24a3 3 0 0 0-3-3H8z"/><path d="M40 10H26a4 4 0 0 0-4 4v24a3 3 0 0 1 3-3h15z"/></svg>
+        <h3>Leer una novela</h3>
+        <p>Lees de principio a fin, palabra por palabra, sin saltarte nada.</p>
+      </div>
+      <div class="vs-card good">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M16 42h16M24 34v8"/><path d="M15 18l5 5-5 5M24 28h8"/></svg>
+        <h3>Leer un manual técnico</h3>
+        <p>Buscas la sección que necesitas, localizas palabras clave y sigues las instrucciones en orden.</p>
+      </div>
+    </div>
+
+    <div class="big-idea">
+      Leer un manual es como usar <code style="font-family:var(--font-mono); font-size:.8em; background:rgba(255,255,255,.18); padding:.05rem .45rem; border-radius:4px;">Ctrl + F</code>: buscas, no lees todo.
+      <small>MANUAL = MAPA DE UN SISTEMA</small>
+    </div>
+  </section>
+
+  <!-- ═════════ ANATOMÍA ═════════ -->
+  <section class="section" id="anatomia">
+    <h2 class="section-title">Las partes de un manual</h2>
+    <p>Casi todos los manuales de software y equipos de cómputo tienen la misma estructura, aunque cambien de marca. Observa esta página de ejemplo y su leyenda:</p>
+
+    <div class="anatomy">
+      <div class="manual-mock" role="img" aria-label="Ejemplo de página de manual con seis partes numeradas">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="mock-part title-part"><span class="n">1</span><b>PyNotes — User Guide</b></div>
+        <div class="mock-part"><span class="n">2</span><b>Introduction</b><span>PyNotes is a simple notes app.</span></div>
+        <div class="mock-part"><span class="n">3</span><b>Requirements</b><span>Windows 10 or later · 4 GB RAM</span></div>
+        <div class="mock-part"><span class="n">4</span><b>Installation</b><span>Step 1. Download the installer.<br>Step 2. Open the file.</span></div>
+        <div class="mock-part warn"><span class="n">5</span><b>Warning</b><span>Close all programs first.</span></div>
+        <div class="mock-part"><span class="n">6</span><b>Troubleshooting</b><span>If you see an error, restart.</span></div>
+      </div>
+
+      <ol class="legend">
+        <li><span class="n">1</span><span><strong>Title</strong> (título): dice de qué producto y de qué versión trata. <em>User Guide</em> = guía del usuario.</span></li>
+        <li><span class="n">2</span><span><strong>Introduction / Overview</strong> (introducción): explica para qué sirve el programa o equipo.</span></li>
+        <li><span class="n">3</span><span><strong>Requirements</strong> (requisitos): lo que tu computadora necesita para poder usarlo. <em>Léela antes de instalar.</em></span></li>
+        <li><span class="n">4</span><span><strong>Installation / Steps</strong> (instalación / pasos): las instrucciones numeradas. <em>Se siguen en orden.</em></span></li>
+        <li><span class="n w">5</span><span><strong>Warnings and notes</strong> (advertencias y notas): avisos importantes. <em>Nunca te los saltes.</em></span></li>
+        <li><span class="n">6</span><span><strong>Troubleshooting</strong> (solución de problemas): qué hacer si algo sale mal.</span></li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Truco:</strong> antes de leer, mira solo los <strong>títulos</strong> de las secciones. En 10 segundos ya sabes si el documento tiene lo que buscas.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ AVISOS ═════════ -->
+  <section class="section" id="avisos">
+    <h2 class="section-title">Los cuatro tipos de aviso</h2>
+    <p>Los manuales usan palabras especiales para llamar tu atención. Aprende a reconocerlas: <strong>cada una indica un nivel diferente de importancia</strong>.</p>
+
+    <div class="alerts">
+      <div class="alert-row note">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>
+          Note
+        </div>
+        <p><strong>Nota:</strong> información extra, útil de saber.
+          <span class="ex">Note: The file is saved automatically.</span></p>
+      </div>
+      <div class="alert-row tip">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>
+          Tip
+        </div>
+        <p><strong>Consejo:</strong> un truco para hacer algo más fácil o más rápido.
+          <span class="ex">Tip: Press Ctrl + S to save quickly.</span></p>
+      </div>
+      <div class="alert-row warning">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg>
+          Warning
+        </div>
+        <p><strong>Advertencia:</strong> puede haber un problema si no sigues la instrucción.
+          <span class="ex">Warning: Do not turn off the computer during the update.</span></p>
+      </div>
+      <div class="alert-row caution">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
+          Caution
+        </div>
+        <p><strong>Precaución:</strong> riesgo de perder datos o dañar el equipo. Es el aviso más serio.
+          <span class="ex">Caution: This action deletes all your files.</span></p>
+      </div>
+    </div>
+
+    <div class="mixtle-tip small reverse">
+      <img src="imagen2.png" alt="Mixtle, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <p><strong>Recuerda:</strong> en tu computadora, un aviso de <em>Warning</em> o <em>Caution</em> es como el mensaje «¿Seguro que quieres borrar este archivo?». Léelo antes de dar clic.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ VOCABULARIO ═════════ -->
+  <section class="section" id="vocabulario">
+    <h2 class="section-title">Palabras que verás en casi todos los manuales</h2>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.25rem 0 .2rem;">Primero, las que ya conoces</h3>
+    <p>Muchas palabras técnicas en inglés se parecen al español (se llaman <em>cognados</em>). ¡Ya sabes más inglés de lo que crees!</p>
+    <div class="chips">
+      <span class="chip">computer<small>computadora</small></span>
+      <span class="chip">program<small>programa</small></span>
+      <span class="chip">system<small>sistema</small></span>
+      <span class="chip">data<small>datos</small></span>
+      <span class="chip">error<small>error</small></span>
+      <span class="chip">file<small>archivo</small></span>
+      <span class="chip">internet<small>internet</small></span>
+      <span class="chip">server<small>servidor</small></span>
+      <span class="chip">memory<small>memoria</small></span>
+      <span class="chip">version<small>versión</small></span>
+      <span class="chip">network<small>red</small></span>
+      <span class="chip">password<small>contraseña</small></span>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.75rem 0 .2rem;">Ahora, las palabras nuevas</h3>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Inglés</th><th>Se pronuncia (aprox.)</th><th>Español</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Requirements</strong></td><td class="pron">ri-cuái-er-ments</td><td>Requisitos</td><td>Check the requirements first.</td></tr>
+        <tr><td><strong>Installation</strong></td><td class="pron">ins-ta-lé-shon</td><td>Instalación</td><td>The installation is fast.</td></tr>
+        <tr><td><strong>Settings</strong></td><td class="pron">sé-tings</td><td>Configuración / ajustes</td><td>Open the settings menu.</td></tr>
+        <tr><td><strong>Download</strong></td><td class="pron">daun-lóud</td><td>Descargar</td><td>Download the file.</td></tr>
+        <tr><td><strong>Update</strong></td><td class="pron">ap-déit</td><td>Actualizar / actualización</td><td>Update the software.</td></tr>
+        <tr><td><strong>Restart</strong></td><td class="pron">ri-start</td><td>Reiniciar</td><td>Restart the computer.</td></tr>
+        <tr><td><strong>Save</strong></td><td class="pron">séiv</td><td>Guardar</td><td>Save your work.</td></tr>
+        <tr><td><strong>Features</strong></td><td class="pron">fí-chers</td><td>Características / funciones</td><td>The app has new features.</td></tr>
+        <tr><td><strong>Troubleshooting</strong></td><td class="pron">tró-bol-shu-ting</td><td>Solución de problemas</td><td>See the troubleshooting section.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout">
+      <p><strong>Cuidado con los «falsos amigos»:</strong> <em>actually</em> significa «en realidad» (no «actualmente», que se dice <em>currently</em>). Y <em>support</em> en un manual casi siempre significa «soporte técnico» o «ser compatible con», no «soportar».</p>
+    </div>
+  </section>
+
+  <!-- ═════════ INSTRUCCIONES ═════════ -->
+  <section class="section" id="instrucciones">
+    <h2 class="section-title">Cómo dan órdenes los manuales</h2>
+
+    <p>Las instrucciones de un manual son muy sencillas: empiezan con <strong>un verbo</strong>. No necesitas sujeto ni conjugar nada. Es como escribir un comando en la terminal.</p>
+
+    <div class="formula-block">
+      <span class="section-label" style="margin-bottom:.5rem;">Fórmula</span>
+      <code class="formula">Verbo + lo que debes hacer</code>
+      <p class="formula-note">Ejemplo: <strong>Click</strong> the Start button. → <em>«Haz clic en el botón Inicio.»</em> El verbo va primero, igual que un comando: <code class="inline">verbo objeto</code>.</p>
+    </div>
+
+    <div class="cmd-grid">
+      <div class="cmd"><span class="v">Click</span><br><span class="es">Hacer clic</span><div class="eg">Click Save.</div></div>
+      <div class="cmd"><span class="v">Open</span><br><span class="es">Abrir</span><div class="eg">Open the file.</div></div>
+      <div class="cmd"><span class="v">Close</span><br><span class="es">Cerrar</span><div class="eg">Close the program.</div></div>
+      <div class="cmd"><span class="v">Select</span><br><span class="es">Seleccionar</span><div class="eg">Select your language.</div></div>
+      <div class="cmd"><span class="v">Type</span><br><span class="es">Escribir (teclear)</span><div class="eg">Type your password.</div></div>
+      <div class="cmd"><span class="v">Press</span><br><span class="es">Presionar</span><div class="eg">Press Enter.</div></div>
+      <div class="cmd"><span class="v">Install</span><br><span class="es">Instalar</span><div class="eg">Install the program.</div></div>
+      <div class="cmd"><span class="v">Connect</span><br><span class="es">Conectar</span><div class="eg">Connect the cable.</div></div>
+      <div class="cmd"><span class="v">Restart</span><br><span class="es">Reiniciar</span><div class="eg">Restart the computer.</div></div>
+      <div class="cmd"><span class="v">Choose</span><br><span class="es">Elegir</span><div class="eg">Choose a folder.</div></div>
+    </div>
+
+    <div class="no-do">
+      <b>Para prohibir algo:</b> se usa <code class="inline">Do not</code> + verbo. Ejemplo: <em>Do not unplug the cable.</em> → «No desconectes el cable.» Siempre que veas <em>Do not</em>, es una prohibición.
+    </div>
+  </section>
+
+  <!-- ═════════ FICHA TÉCNICA ═════════ -->
+  <section class="section" id="ficha">
+    <h2 class="section-title">Cómo leer una ficha técnica</h2>
+    <p>Una <strong>ficha técnica</strong> (<em>specifications</em> o <em>spec sheet</em>) es la «tarjeta de identidad» de un equipo: lista sus datos en forma de tabla. Es lo que ves cuando comparas laptops antes de comprar una. Casi siempre el formato es <strong>nombre del dato + valor</strong>.</p>
+
+    <div class="spec-card">
+      <div class="spec-head">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="30" height="22" rx="2"/><path d="M4 38h40l-3-7H7z"/></svg>
+        <div><b>LX-15 Laptop</b><span>Technical specifications · ejemplo didáctico</span></div>
+      </div>
+      <div class="spec-row hd"><span>Dato (inglés)</span><span>Valor</span><span>Significa</span></div>
+      <div class="spec-row"><span class="k">Processor</span><span class="v">4 cores, 2.4 GHz</span><span class="es">Procesador de 4 núcleos</span></div>
+      <div class="spec-row"><span class="k">Memory (RAM)</span><span class="v">8 GB</span><span class="es">Memoria RAM</span></div>
+      <div class="spec-row"><span class="k">Storage</span><span class="v">256 GB SSD</span><span class="es">Almacenamiento</span></div>
+      <div class="spec-row"><span class="k">Display</span><span class="v">15.6 inches, Full HD</span><span class="es">Pantalla de 15.6 pulgadas</span></div>
+      <div class="spec-row"><span class="k">Operating system</span><span class="v">Windows 11</span><span class="es">Sistema operativo</span></div>
+      <div class="spec-row"><span class="k">Battery life</span><span class="v">Up to 8 hours</span><span class="es">Batería: hasta 8 horas</span></div>
+      <div class="spec-row"><span class="k">Ports</span><span class="v">2 USB, 1 HDMI</span><span class="es">Puertos</span></div>
+      <div class="spec-row"><span class="k">Weight</span><span class="v">1.8 kg</span><span class="es">Peso</span></div>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.75rem 0 .2rem;">Las unidades que no pueden faltar</h3>
+    <div class="units">
+      <div class="unit"><b>GB</b><span>gigabyte<br>memoria y almacenamiento</span></div>
+      <div class="unit"><b>MB</b><span>megabyte<br>archivos pequeños</span></div>
+      <div class="unit"><b>GHz</b><span>gigahertz<br>velocidad del procesador</span></div>
+      <div class="unit"><b>inch</b><span>pulgada<br>tamaño de pantalla</span></div>
+      <div class="unit"><b>kg</b><span>kilogramo<br>peso del equipo</span></div>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.75rem 0 .2rem;">Frases pequeñas que cambian el significado</h3>
+    <div class="phrase-grid">
+      <div class="phrase"><b>up to</b><span>hasta (un máximo)</span></div>
+      <div class="phrase"><b>at least</b><span>al menos (un mínimo)</span></div>
+      <div class="phrase"><b>or later</b><span>o una versión más nueva</span></div>
+      <div class="phrase"><b>free space</b><span>espacio libre en el disco</span></div>
+      <div class="phrase"><b>minimum</b><span>lo mínimo para que funcione</span></div>
+      <div class="phrase"><b>recommended</b><span>lo ideal para que funcione bien</span></div>
+    </div>
+
+    <p>Con ellas puedes leer los <strong>requisitos de un programa</strong>, algo que verás siempre antes de instalar software:</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th></th><th>Minimum requirements</th><th>Recommended requirements</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Operating system</strong></td><td>Windows 10 or later</td><td>Windows 11</td></tr>
+        <tr><td><strong>Memory (RAM)</strong></td><td>At least 4 GB</td><td>8 GB</td></tr>
+        <tr><td><strong>Free space</strong></td><td>500 MB</td><td>1 GB</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout note">
+      <p>Si tu computadora cumple lo <strong>mínimo</strong>, el programa funciona. Si cumple lo <strong>recomendado</strong>, funciona sin problemas. En este ejemplo, una laptop con 4 GB de RAM puede instalarlo, pero con 8 GB irá mejor.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ ESTRATEGIA ═════════ -->
+  <section class="section" id="estrategia">
+    <h2 class="section-title">Estrategia de lectura en tres pasos</h2>
+    <p>Cuando un documento en inglés te parezca largo, no lo leas de golpe. Usa estos tres pasos, que se parecen mucho a cómo revisas un programa:</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <span class="num">PASO 1</span>
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 24s7-12 21-12 21 12 21 12-7 12-21 12S3 24 3 24z"/><circle cx="24" cy="24" r="6"/></svg>
+        <h3>Skim</h3>
+        <span class="es">Mirar rápido</span>
+        <p>Lee solo el título y los encabezados. Entiende de qué trata.</p>
+        <span class="code-like">como ver el índice del proyecto</span>
+      </div>
+      <div class="flow-step">
+        <span class="num">PASO 2</span>
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M29 29l13 13"/></svg>
+        <h3>Scan</h3>
+        <span class="es">Buscar datos</span>
+        <p>Busca palabras clave, números y avisos (<em>Warning</em>, <em>GB</em>, <em>Step</em>).</p>
+        <span class="code-like">como usar Ctrl + F</span>
+      </div>
+      <div class="flow-step">
+        <span class="num">PASO 3</span>
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 25l9 9 19-21"/><rect x="4" y="4" width="40" height="40" rx="5"/></svg>
+        <h3>Read</h3>
+        <span class="es">Leer con atención</span>
+        <p>Ahora sí, lee con calma la parte que necesitas y sigue los pasos en orden.</p>
+        <span class="code-like">como ejecutar línea por línea</span>
+      </div>
+    </div>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«Si encuentras una palabra que no conoces, no te detengas. Mira si se parece al español, lee la oración completa o fíjate en las imágenes. Y recuerda: <strong>usar un traductor para una palabra suelta no es hacer trampa</strong>, es una herramienta más de tu <em>toolbox</em>.»</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ EJEMPLO RESUELTO ═════════ -->
+  <section class="section" id="ejemplo">
+    <h2 class="section-title">Ejemplo resuelto: leyendo una guía de instalación</h2>
+
+    <div class="example-block">
+      <div class="example-header">Guía de instalación de ejemplo — PyNotes Quick Start</div>
+      <div class="example-body">
+        <div class="doc-sample">
+          <span class="h">REQUIREMENTS</span>
+          Windows 10 or later · 4 GB RAM · 500 MB free space
+          <span class="h">INSTALLATION</span>
+          1. Download the installer from the official website.<br>
+          2. Open the file <span class="n">PyNotes_Setup.exe</span>.<br>
+          3. Click <span class="n">Next</span>, then click <span class="n">Install</span>.<br>
+          4. Restart the computer.
+          <span class="h">WARNING</span>
+          <span class="w">Close all programs before you install.</span>
+          <span class="h">NOTE</span>
+          The installation takes about 2 minutes.
+          <span class="h">TROUBLESHOOTING</span>
+          If you see an error, restart the installer.
+        </div>
+
+        <p><strong>Aplicamos los tres pasos:</strong></p>
+        <ol class="step-list">
+          <li><span class="step-n">1</span><span class="step-content"><strong>Skim:</strong> los títulos son <em>Requirements, Installation, Warning, Note</em> y <em>Troubleshooting</em>. Ya sabemos que es una guía para instalar un programa.</span></li>
+          <li><span class="step-n">2</span><span class="step-content"><strong>Scan:</strong> buscamos los datos. Necesitamos <em>Windows 10 or later</em> («Windows 10 o más nuevo»), <em>4 GB RAM</em> y <em>500 MB free space</em>. Y hay una advertencia: <em>Close all programs</em> («cierra todos los programas»).</span></li>
+          <li><span class="step-n">3</span><span class="step-content"><strong>Read:</strong> los cuatro pasos empiezan con un verbo: <em>Download, Open, Click, Restart</em>. Los seguimos en orden y sabemos que tardará unos 2 minutos (<em>about 2 minutes</em>).</span></li>
+          <li><span class="step-n">4</span><span class="step-content"><strong>Si algo falla:</strong> la sección <em>Troubleshooting</em> dice <em>restart the installer</em>, es decir, «reinicia el instalador».</span></li>
+        </ol>
+        <div class="result-line">Resultado: sin traducir cada palabra, ya sabes qué necesitas, qué hacer, qué cuidar y qué hacer si hay un error.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ ACTIVIDAD PRÁCTICA ═════════ -->
+  <section class="section" id="practica">
+    <h2 class="section-title">Actividad práctica</h2>
+    <p>Resuelve los tres ejercicios. Cuando termines cada uno, presiona <strong>Revisar</strong> para ver cuántos aciertos tuviste. Puedes corregir y volver a revisar.</p>
+
+    <!-- Ejercicio 1 -->
+    <div class="card ex" id="ex1" data-total="8">
+      <span class="card-title">Ejercicio 1 · Relaciona cada palabra con su significado</span>
+      <p>Elige en cada lista el significado correcto en español.</p>
+
+      <div class="ex-item" data-ans="Advertencia"><span class="q"><code>Warning</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Requisitos"><span class="q"><code>Requirements</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Descargar"><span class="q"><code>Download</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Solución de problemas"><span class="q"><code>Troubleshooting</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Configuración"><span class="q"><code>Settings</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Guardar"><span class="q"><code>Save</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Reiniciar"><span class="q"><code>Restart</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Actualizar"><span class="q"><code>Update</code></span><select><option value="">Elige…</option></select><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check">Revisar</button>
+        <button class="btn ghost" data-act="show">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 2 -->
+    <div class="card ex" id="ex2" data-total="5">
+      <span class="card-title">Ejercicio 2 · Ordena los pasos de la instalación</span>
+      <p>Estos pasos para instalar un programa están desordenados. Escribe el número de orden correcto (del 1 al 5) en cada uno. <em>Pista: empieza por descargar y termina con reiniciar.</em></p>
+
+      <div class="ex-item num" data-ans="4"><span class="q">Click Install.</span><select><option value="">–</option></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="1"><span class="q">Download the installer.</span><select><option value="">–</option></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="5"><span class="q">Restart the computer.</span><select><option value="">–</option></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="3"><span class="q">Click Next.</span><select><option value="">–</option></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="2"><span class="q">Open the installer.</span><select><option value="">–</option></select><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check">Revisar</button>
+        <button class="btn ghost" data-act="show">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 3 -->
+    <div class="card ex" id="ex3" data-total="6">
+      <span class="card-title">Ejercicio 3 · Lee la ficha técnica y responde</span>
+      <p>Observa otra vez la ficha de la <strong>LX-15 Laptop</strong> y marca si cada oración es verdadera o falsa.</p>
+
+      <div class="ex-item" data-ans="V"><span class="q">The laptop has 8 GB of RAM.</span><span class="tf"><label><input type="radio" name="e3a" value="V"> Verdadero</label><label><input type="radio" name="e3a" value="F"> Falso</label></span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="F"><span class="q">The storage is 512 GB.</span><span class="tf"><label><input type="radio" name="e3b" value="V"> Verdadero</label><label><input type="radio" name="e3b" value="F"> Falso</label></span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="V"><span class="q">The battery lasts up to 8 hours.</span><span class="tf"><label><input type="radio" name="e3c" value="V"> Verdadero</label><label><input type="radio" name="e3c" value="F"> Falso</label></span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="F"><span class="q">The laptop has four USB ports.</span><span class="tf"><label><input type="radio" name="e3d" value="V"> Verdadero</label><label><input type="radio" name="e3d" value="F"> Falso</label></span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="F"><span class="q">The operating system is Linux.</span><span class="tf"><label><input type="radio" name="e3e" value="V"> Verdadero</label><label><input type="radio" name="e3e" value="F"> Falso</label></span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="V"><span class="q">The screen is 15.6 inches.</span><span class="tf"><label><input type="radio" name="e3f" value="V"> Verdadero</label><label><input type="radio" name="e3f" value="F"> Falso</label></span><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check">Revisar</button>
+        <button class="btn ghost" data-act="show">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Reto para tu portafolio:</strong> busca la ficha técnica o el manual de un celular, una laptop o un router (puede estar en español e inglés). Elige <strong>cinco palabras en inglés</strong> que veas ahí, escribe su significado y agrega una captura de pantalla. Guárdalo como evidencia para tu <strong>glosario técnico ilustrado</strong>, producto de la Unidad 1.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ CIERRE ═════════ -->
+  <section class="section" id="cierre">
+    <h2 class="section-title">Cierre de la sesión</h2>
+    <div class="concept-box">
+      <span class="concept-title">Síntesis</span>
+      <p>Hoy aprendiste que leer un manual técnico es <strong>buscar, no leer todo</strong>. Reconociste sus seis partes (título, introducción, requisitos, pasos, avisos y solución de problemas), los cuatro tipos de aviso (<em>Note, Tip, Warning, Caution</em>) y los verbos con los que empiezan las instrucciones. También practicaste cómo leer una ficha técnica: dato, valor y unidad, con pistas como <em>up to</em>, <em>at least</em> y <em>or later</em>. Por último, usaste la estrategia <strong>Skim, Scan, Read</strong>. En el Tema 1.4 reunirás todo este vocabulario para construir tus <strong>glosarios bilingües de términos comunes</strong>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <h2 class="section-title">Conclusión</h2>
+    <p>En el área de Sistemas Computacionales casi todo lo que instalas, configuras o compras viene acompañado de documentación en inglés: guías de instalación, fichas técnicas, <em>READMEs</em> y manuales de herramientas. No necesitas ser un experto en inglés para aprovecharla; necesitas una estrategia. Si identificas las partes del documento, reconoces las palabras clave y los verbos de instrucción, y sigues los pasos en orden, puedes instalar y configurar casi cualquier programa o equipo por tu cuenta. Esa autonomía para leer documentación técnica es una de las habilidades más valiosas de un profesional de sistemas.</p>
+  </section>
+
+  <section class="section" id="referencias">
+    <h2 class="section-title">Referencias bibliográficas</h2>
+    <p style="font-size:.92rem; color:var(--ink-secondary);">Glendinning, E. H. y McEwan, J. (2021). <em>Oxford English for computing</em> (Nueva edición revisada). Oxford University Press.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="imagen1.png" alt="Mixtle">
+    <span><strong>IEDEP</strong> · Instituto de Educación Digital del Estado de Puebla</span>
+  </div>
+  <span>Inglés para Ingeniería I · Mtro. José Armando Vera Rodríguez</span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // Opciones de los selectores (se llenan por JavaScript)
+  var ES = ["Actualizar", "Advertencia", "Configuración", "Descargar", "Guardar", "Reiniciar", "Requisitos", "Solución de problemas"];
+  var NUM = ["1", "2", "3", "4", "5"];
+
+  function fillSelect(sel, list) {
+    list.forEach(function (v) {
+      var o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
+    });
+  }
+  document.querySelectorAll("#ex1 select").forEach(function (s) { fillSelect(s, ES); });
+  document.querySelectorAll("#ex2 select").forEach(function (s) { fillSelect(s, NUM); });
+
+  function valueOf(item) {
+    var sel = item.querySelector("select");
+    if (sel) return sel.value;
+    var r = item.querySelector("input[type=radio]:checked");
+    return r ? r.value : "";
+  }
+  function setValue(item, val) {
+    var sel = item.querySelector("select");
+    if (sel) { sel.value = val; return; }
+    item.querySelectorAll("input[type=radio]").forEach(function (r) { r.checked = (r.value === val); });
+  }
+  function clearMarks(box) {
+    box.querySelectorAll(".ex-item").forEach(function (it) {
+      it.classList.remove("ok", "bad");
+      it.querySelector(".mark").textContent = "";
+    });
+  }
+
+  document.querySelectorAll(".ex").forEach(function (box) {
+    var score = box.querySelector(".ex-score");
+    box.addEventListener("click", function (e) {
+      var act = e.target.getAttribute && e.target.getAttribute("data-act");
+      if (!act) return;
+      var items = box.querySelectorAll(".ex-item");
+
+      if (act === "check") {
+        var ok = 0, empty = 0;
+        items.forEach(function (it) {
+          var v = valueOf(it), good = (v === it.getAttribute("data-ans"));
+          it.classList.remove("ok", "bad");
+          if (v === "") { empty++; it.querySelector(".mark").textContent = "Sin responder"; it.classList.add("bad"); return; }
+          if (good) { ok++; it.classList.add("ok"); it.querySelector(".mark").textContent = "Correcto"; }
+          else { it.classList.add("bad"); it.querySelector(".mark").textContent = "Revisa de nuevo"; }
+        });
+        var total = items.length;
+        score.textContent = "Aciertos: " + ok + " de " + total + (ok === total ? " · ¡Excelente!" : (empty ? " · Te faltan " + empty + " por responder" : " · ¡Casi! Corrige y vuelve a revisar"));
+      }
+      if (act === "show") {
+        items.forEach(function (it) { setValue(it, it.getAttribute("data-ans")); });
+        clearMarks(box);
+        items.forEach(function (it) { it.classList.add("ok"); it.querySelector(".mark").textContent = "Respuesta"; });
+        score.textContent = "Estas son las respuestas correctas.";
+      }
+      if (act === "reset") {
+        items.forEach(function (it) { setValue(it, ""); });
+        clearMarks(box);
+        score.textContent = "";
+      }
+    });
+    box.addEventListener("change", function () { clearMarks(box); score.textContent = ""; });
+  });
+})();
+</script>
+
+</body>
+</html>

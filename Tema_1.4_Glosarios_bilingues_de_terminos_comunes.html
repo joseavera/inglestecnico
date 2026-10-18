@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 1.4 — Glosarios bilingües de términos comunes | Inglés para Ingeniería I</title>
+<meta name="description" content="Material de clase — Inglés para Ingeniería I, Unidad 1, Tema 1.4: cómo construir un glosario técnico bilingüe inglés-español de herramientas, componentes y procesos de Sistemas Computacionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ── Extensiones propias de esta clase (no modifican base.css) ── */
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+
+  code.inline {
+    font-family: var(--font-mono);
+    font-size: .86em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .05rem .35rem;
+    color: var(--guinda-dark);
+  }
+
+  /* Mixtle */
+  .mixtle-tip {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    background: var(--guinda-light); border: 1px solid #D8A8BA;
+    border-radius: var(--radius-lg); padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .mixtle-tip img { width: 110px; height: auto; flex-shrink: 0; }
+  .mixtle-bubble p { font-size: .97rem; line-height: 1.7; color: var(--ink); margin-bottom: 0; }
+  .mixtle-tip.small img { width: 80px; }
+  .mixtle-tip.reverse { flex-direction: row-reverse; }
+  @media (max-width: 600px) {
+    .mixtle-tip, .mixtle-tip.reverse { flex-direction: column; align-items: center; }
+  }
+
+  /* Idea clave en una línea */
+  .big-idea {
+    text-align: center; margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem; border-radius: var(--radius-lg);
+    background: var(--guinda); color: var(--white);
+    font-family: var(--font-display); font-size: 1.45rem; line-height: 1.35; font-weight: 600;
+  }
+  .big-idea small { display:block; margin-top:.4rem; font-family: var(--font-ui); font-size: .8rem; font-weight: 500; letter-spacing: .04em; opacity: .85; }
+
+  /* Comparación novela vs manual */
+  .vs-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+  .vs-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.2rem; background: var(--off-white); }
+  .vs-card.good { border-color: var(--guinda); background: var(--guinda-light); }
+  .vs-card h3 { font-family: var(--font-ui); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--guinda); margin-bottom: .5rem; }
+  .vs-card p { font-size: .95rem; margin: 0; }
+  .vs-card svg { width: 38px; height: 38px; color: var(--guinda); margin-bottom: .4rem; }
+  @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } }
+
+  /* Anatomía de un manual */
+  .anatomy { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; margin: 1.25rem 0; }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .manual-mock {
+    background: var(--white); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    padding: 1.1rem 1.2rem 1.3rem; position: relative;
+  }
+  .mock-bar { display:flex; gap:.35rem; margin-bottom:.8rem; }
+  .mock-bar i { width:9px; height:9px; border-radius:50%; background: var(--border-strong); display:block; }
+  .mock-part { position: relative; padding: .55rem .7rem .55rem 2.4rem; margin-bottom: .55rem; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--off-white); }
+  .mock-part .n {
+    position:absolute; left:.55rem; top:.55rem; width:1.35rem; height:1.35rem; border-radius:50%;
+    background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mock-part b { font-family: var(--font-ui); font-size: .82rem; color: var(--guinda-dark); display:block; }
+  .mock-part span { font-family: var(--font-mono); font-size: .76rem; color: var(--ink-secondary); display:block; line-height:1.5; }
+  .mock-part.warn { border-color:#C98A00; background:#FFF8E6; }
+  .mock-part.warn .n { background:#B37700; }
+  .mock-part.title-part b { font-family: var(--font-display); font-size: 1.15rem; }
+  .legend { list-style:none; margin:0; padding:0; }
+  .legend li { display:flex; gap:.7rem; padding:.55rem 0; border-bottom: 1px solid var(--border); font-size:.93rem; line-height:1.5; }
+  .legend li:last-child { border-bottom:none; }
+  .legend .n { flex:0 0 1.5rem; height:1.5rem; border-radius:50%; background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:.15rem; }
+  .legend .n.w { background:#B37700; }
+  .legend em { color: var(--guinda-dark); }
+
+  /* Chips de palabras */
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0 1.1rem; }
+  .chip {
+    font-family: var(--font-mono); font-size:.84rem; padding:.3rem .75rem;
+    background: var(--guinda-light); border:1px solid #D8A8BA; border-radius:999px; color: var(--guinda-dark);
+  }
+  .chip small { font-family: var(--font-ui); font-size:.7rem; color: var(--ink-secondary); margin-left:.35rem; }
+
+  .pron { font-family: var(--font-ui); font-size:.8rem; color: var(--ink-secondary); font-style: italic; }
+
+  /* Avisos tipo manual */
+  .alerts { display:grid; gap:.8rem; margin: 1.25rem 0; }
+  .alert-row { display:grid; grid-template-columns: 112px 1fr; gap: 1rem; align-items:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem 1rem; background: var(--white); }
+  .alert-row .lbl { display:flex; align-items:center; gap:.45rem; font-family: var(--font-ui); font-weight:700; font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; }
+  .alert-row .lbl svg { width:22px; height:22px; flex-shrink:0; }
+  .alert-row p { font-size:.93rem; line-height:1.55; margin:0; }
+  .alert-row .ex { display:block; font-family: var(--font-mono); font-size:.82rem; margin-top:.3rem; color: var(--ink); }
+  .alert-row.note    { border-left:5px solid var(--guinda);   } .alert-row.note .lbl    { color: var(--guinda); }
+  .alert-row.tip     { border-left:5px solid #1F7A5C;         } .alert-row.tip .lbl     { color:#1F7A5C; }
+  .alert-row.warning { border-left:5px solid #B37700;         } .alert-row.warning .lbl { color:#9A6600; }
+  .alert-row.caution { border-left:5px solid #B3261E;         } .alert-row.caution .lbl { color:#B3261E; }
+  @media (max-width: 600px) { .alert-row { grid-template-columns: 1fr; gap:.4rem; } }
+
+  /* Pasos tipo tarjeta */
+  .cmd-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:.8rem; margin:1.2rem 0; }
+  .cmd { border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .95rem; background: var(--off-white); }
+  .cmd .v { font-family: var(--font-mono); font-weight:500; font-size:1.02rem; color: var(--guinda); }
+  .cmd .es { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); text-transform:uppercase; letter-spacing:.05em; }
+  .cmd .eg { font-size:.88rem; line-height:1.45; margin-top:.35rem; }
+
+  .no-do {
+    border:2px solid #B3261E; background:#FFF3F2; border-radius: var(--radius-md); padding:.8rem 1.1rem; margin:1rem 0;
+    font-family: var(--font-ui); font-size:.92rem;
+  }
+  .no-do b { color:#B3261E; }
+
+  /* Ficha técnica */
+  .spec-card { border:1px solid var(--border-strong); border-radius: var(--radius-lg); overflow:hidden; box-shadow: var(--shadow-md); margin:1.25rem 0; background: var(--white); }
+  .spec-head { background: var(--guinda); color: var(--white); padding:.9rem 1.3rem; display:flex; align-items:center; gap:.9rem; }
+  .spec-head svg { width:34px; height:34px; flex-shrink:0; }
+  .spec-head b { font-family: var(--font-display); font-size:1.35rem; display:block; line-height:1.1; }
+  .spec-head span { font-family: var(--font-ui); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; opacity:.85; }
+  .spec-row { display:grid; grid-template-columns: 1.1fr 1.2fr 1.1fr; gap:.8rem; padding:.55rem 1.3rem; border-bottom:1px solid var(--border); align-items:baseline; font-size:.93rem; }
+  .spec-row:nth-child(even) { background: var(--surface); }
+  .spec-row:last-child { border-bottom:none; }
+  .spec-row .k { font-family: var(--font-ui); font-weight:600; font-size:.82rem; color: var(--guinda-dark); }
+  .spec-row .v { font-family: var(--font-mono); font-size:.86rem; }
+  .spec-row .es { font-size:.86rem; color: var(--ink-secondary); }
+  .spec-row.hd { background: var(--guinda-light); font-family: var(--font-ui); font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color: var(--guinda); }
+  @media (max-width: 600px) {
+    .spec-row { grid-template-columns: 1fr; gap:.1rem; padding:.6rem 1rem; }
+    .spec-row.hd { display:none; }
+  }
+
+  .units { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:.7rem; margin:1rem 0; }
+  .unit { text-align:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .5rem; background: var(--off-white); }
+  .unit b { display:block; font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); }
+  .unit span { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); line-height:1.35; display:block; margin-top:.15rem; }
+
+  .phrase-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap:.7rem; margin:1rem 0; }
+  .phrase { border:1px solid var(--border); border-radius: var(--radius-md); padding:.75rem .95rem; background: var(--white); }
+  .phrase b { font-family: var(--font-mono); font-size:.92rem; color: var(--guinda); display:block; }
+  .phrase span { font-size:.88rem; color: var(--ink-secondary); }
+
+  /* Estrategia: 3 pasos */
+  .flow { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin:1.4rem 0; position:relative; }
+  .flow-step { border:1px solid var(--border-strong); border-radius: var(--radius-lg); padding:1.2rem 1.1rem 1.1rem; background: var(--white); text-align:center; position:relative; box-shadow: var(--shadow-sm); }
+  .flow-step svg { width:48px; height:48px; color: var(--guinda); margin-bottom:.4rem; }
+  .flow-step .num { position:absolute; top:-.7rem; left:50%; transform:translateX(-50%); background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700; padding:.15rem .7rem; border-radius:999px; letter-spacing:.06em; }
+  .flow-step h3 { font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); margin-bottom:.1rem; }
+  .flow-step .es { font-family: var(--font-ui); font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-secondary); margin-bottom:.5rem; display:block; }
+  .flow-step p { font-size:.9rem; line-height:1.55; margin:0; }
+  .flow-step .code-like { display:block; margin-top:.6rem; font-family: var(--font-mono); font-size:.78rem; color: var(--guinda-dark); background: var(--guinda-light); border-radius: var(--radius-sm); padding:.3rem .5rem; }
+  @media (max-width: 760px) { .flow { grid-template-columns: 1fr; gap:1.4rem; } }
+
+  /* Manual de ejemplo (changelog-like) */
+  .doc-sample { font-family: var(--font-mono); font-size:.88rem; line-height:1.7; background: var(--off-white); border:1px solid var(--border); border-radius: var(--radius-md); padding: 1rem 1.2rem; margin: .8rem 0 1.2rem; }
+  .doc-sample .h { font-weight:700; color: var(--guinda); display:block; margin-top:.6rem; }
+  .doc-sample .h:first-child { margin-top:0; }
+  .doc-sample .w { color:#9A6600; font-weight:700; }
+  .doc-sample .n { color: var(--guinda-dark); font-weight:700; }
+
+  /* Ejercicios interactivos */
+  .ex-item { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; padding:.55rem .8rem; margin-bottom:.5rem; border:1px solid var(--border); border-radius: var(--radius-md); background: var(--white); }
+  .ex-item .q { flex: 1 1 220px; font-size:.95rem; line-height:1.5; }
+  .ex-item .q code { font-family: var(--font-mono); font-size:.88rem; color: var(--guinda-dark); }
+  .ex-item select, .ex-item .tf label { font-family: var(--font-ui); font-size:.88rem; }
+  .ex-item select { padding:.4rem .5rem; border:1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); min-width: 190px; }
+  .ex-item.num select { min-width: 70px; }
+  .ex-item .tf { display:flex; gap:1rem; }
+  .ex-item .tf label { display:flex; align-items:center; gap:.35rem; cursor:pointer; }
+  .ex-item.ok  { border-color:#1F7A5C; background:#EEF8F3; }
+  .ex-item.bad { border-color:#B3261E; background:#FFF3F2; }
+  .ex-item .mark { font-family: var(--font-ui); font-size:.8rem; font-weight:700; min-width: 6.5rem; }
+  .ex-item.ok .mark { color:#1F7A5C; } .ex-item.bad .mark { color:#B3261E; }
+  .ex-actions { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:.9rem; }
+  .btn { font-family: var(--font-ui); font-size:.85rem; font-weight:600; padding:.55rem 1.1rem; border-radius: var(--radius-md); cursor:pointer; border:1px solid var(--guinda); background: var(--guinda); color: var(--white); }
+  .btn.ghost { background: var(--white); color: var(--guinda); }
+  .btn:hover { filter: brightness(1.1); }
+  .ex-score { font-family: var(--font-ui); font-weight:700; color: var(--guinda); font-size:.92rem; }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.25rem 0; }
+  .table-scroll table { margin: 0; min-width: 480px; }
+
+  .footer-brand { display: flex; align-items: center; gap: .75rem; }
+  .footer-brand img { height: 32px; width: auto; }
+
+  /* ── Específico del Tema 1.4: glosarios ── */
+  .entry-card { border:1px solid var(--border-strong); border-radius: var(--radius-lg); background: var(--white); box-shadow: var(--shadow-md); overflow:hidden; }
+  .entry-top { display:grid; grid-template-columns: 1fr auto; gap:1rem; padding:1rem 1.3rem .8rem; align-items:center; border-bottom:1px solid var(--border); background: var(--guinda-light); }
+  .entry-term { font-family: var(--font-mono); font-size:1.5rem; font-weight:500; color: var(--guinda); line-height:1.1; }
+  .entry-pos { font-family: var(--font-ui); font-size:.8rem; font-style: italic; color: var(--ink-secondary); margin-left:.5rem; }
+  .entry-es { font-family: var(--font-ui); font-weight:700; font-size:1.05rem; color: var(--guinda-dark); display:block; margin-top:.25rem; }
+  .entry-pic { width:64px; height:64px; border-radius: var(--radius-md); background: var(--white); border:1px dashed var(--guinda-rule); display:flex; align-items:center; justify-content:center; color: var(--guinda); }
+  .entry-pic svg { width:42px; height:42px; }
+  .entry-body { padding:.9rem 1.3rem 1.1rem; }
+  .entry-line { font-size:.93rem; line-height:1.55; margin-bottom:.55rem; }
+  .entry-line:last-child { margin-bottom:0; }
+  .entry-line b { font-family: var(--font-ui); font-size:.72rem; letter-spacing:.07em; text-transform:uppercase; color: var(--guinda); display:block; }
+  .entry-line .en { font-family: var(--font-mono); font-size:.86rem; }
+  .entry-cat { display:inline-block; font-family: var(--font-ui); font-size:.68rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:.15rem .6rem; border-radius:999px; background: var(--guinda); color: var(--white); margin-top:.7rem; }
+  .pin { display:inline-flex; width:1.25rem; height:1.25rem; border-radius:50%; background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.68rem; font-weight:700; align-items:center; justify-content:center; margin-right:.35rem; vertical-align: middle; }
+
+  .cat-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin:1.3rem 0; }
+  @media (max-width: 760px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-col { border:1px solid var(--border-strong); border-radius: var(--radius-lg); overflow:hidden; background: var(--white); }
+  .cat-col header { background: var(--guinda); color: var(--white); padding:.8rem 1rem; display:flex; align-items:center; gap:.7rem; }
+  .cat-col header svg { width:30px; height:30px; flex-shrink:0; }
+  .cat-col header b { font-family: var(--font-display); font-size:1.25rem; line-height:1.1; display:block; }
+  .cat-col header span { font-family: var(--font-ui); font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; opacity:.85; }
+  .cat-col p.def { font-size:.88rem; line-height:1.5; padding:.7rem 1rem .2rem; color: var(--ink-secondary); margin:0; }
+  .cat-col ul { list-style:none; margin:0; padding:.4rem 1rem 1rem; }
+  .cat-col li { display:flex; justify-content:space-between; gap:.5rem; padding:.35rem 0; border-bottom:1px dashed var(--border); font-size:.9rem; line-height:1.4; }
+  .cat-col li:last-child { border-bottom:none; }
+  .cat-col li code { font-family: var(--font-mono); font-size:.86rem; color: var(--guinda-dark); }
+  .cat-col li span { color: var(--ink-secondary); text-align:right; }
+
+  .acr { font-family: var(--font-mono); font-weight:700; color: var(--guinda); }
+
+  .loan { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:.6rem; margin:1rem 0; }
+  .loan div { text-align:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.65rem .4rem; background: var(--off-white); font-family: var(--font-mono); font-size:.9rem; color: var(--guinda-dark); }
+  .loan small { display:block; font-family: var(--font-ui); font-size:.68rem; color: var(--ink-secondary); margin-top:.1rem; }
+
+  /* Constructor de entradas */
+  .builder { display:grid; grid-template-columns: 1fr 1fr; gap:1.4rem; align-items:start; margin-top:.8rem; }
+  @media (max-width: 800px) { .builder { grid-template-columns: 1fr; } }
+  .field { margin-bottom:.8rem; }
+  .field label { display:block; font-family: var(--font-ui); font-size:.75rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color: var(--guinda); margin-bottom:.25rem; }
+  .field input, .field select, .field textarea { width:100%; font-family: var(--font-ui); font-size:.92rem; padding:.55rem .7rem; border:1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--white); color: var(--ink); }
+  .field textarea { min-height: 64px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:2px solid var(--guinda-rule); outline-offset:1px; }
+  .field small { font-family: var(--font-ui); font-size:.74rem; color: var(--ink-secondary); }
+  .ghost-text { color: var(--ink-muted); font-style: italic; }
+
+  /* Lista de verificación */
+  .checklist { list-style:none; margin:0; padding:0; }
+  .checklist li { padding:.55rem .2rem; border-bottom:1px solid var(--border); }
+  .checklist li:last-child { border-bottom:none; }
+  .checklist label { display:flex; gap:.7rem; align-items:flex-start; cursor:pointer; font-size:.95rem; line-height:1.5; }
+  .checklist input { width:1.15rem; height:1.15rem; margin-top:.25rem; accent-color: var(--guinda); flex-shrink:0; }
+  .check-total { margin-top:.8rem; font-family: var(--font-ui); font-weight:700; color: var(--guinda); font-size:.92rem; }
+  .meter { height:10px; background: var(--surface); border:1px solid var(--border); border-radius:999px; overflow:hidden; margin-top:.4rem; }
+  .meter i { display:block; height:100%; width:0; background: var(--guinda); transition: width .25s; }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap"><img src="imagen1.png" alt="Mixtle, mascota del IEDEP"></div>
+  <div class="header-text">
+    <span class="inst-name">Instituto de Educación Digital del Estado de Puebla</span>
+    <span class="doc-title">Material de clase · Inglés para Ingeniería I</span>
+  </div>
+</header>
+
+<section class="class-hero">
+  <div class="hero-inner">
+    <span class="class-label">Licenciatura en Sistemas Computacionales</span>
+    <h1>Tema 1.4 — Glosarios bilingües de términos comunes</h1>
+    <span class="class-subtitle">Unidad 1: Fundamentos del inglés técnico · Taller para construir tu glosario técnico ilustrado inglés-español</span>
+    <div class="meta-row">
+      <div class="meta-item">Programa educativo<span>Lic. en Sistemas Computacionales</span></div>
+      <div class="meta-item">Asignatura<span>Inglés para Ingeniería I</span></div>
+      <div class="meta-item">Unidad<span>1 · Fundamentos del inglés técnico</span></div>
+      <div class="meta-item">Tema<span>1.4 Glosarios bilingües de términos comunes</span></div>
+      <div class="meta-item">Fecha<span>18 de octubre de 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="page-wrapper">
+
+  <!-- ═════════ COMPETENCIAS ═════════ -->
+  <section class="section" id="competencias">
+    <h2 class="section-title">Competencias a desarrollar</h2>
+    <div class="competency-card">
+      <span class="comp-num">01</span>
+      <div class="comp-text"><strong>Reconocer</strong> las partes de una entrada de glosario bilingüe (término, categoría gramatical, traducción, definición y ejemplo).</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">02</span>
+      <div class="comp-text"><strong>Clasificar</strong> términos de sistemas computacionales en herramientas, componentes y procesos, y reconocer las siglas más comunes.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">03</span>
+      <div class="comp-text"><strong>Redactar</strong> definiciones sencillas en inglés y ejemplos en contexto para construir tu <em>glosario técnico ilustrado</em>, producto de la Unidad 1.</div>
+    </div>
+  </section>
+
+  <!-- ═════════ PUNTO DE PARTIDA ═════════ -->
+  <section class="section" id="analogia">
+    <h2 class="section-title">Punto de partida: tu glosario es el diccionario de tu proyecto</h2>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, el mapache ingeniero, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«Cuando programas, cada variable tiene un <strong>nombre</strong> y guarda un <strong>valor</strong>. Un glosario funciona igual: cada <strong>término en inglés</strong> guarda su <strong>significado en español</strong>. Y así como en un programa documentas tus funciones con comentarios, en un glosario explicas cada palabra con una <strong>definición</strong> y un <strong>ejemplo</strong>. Hoy vas a armar el tuyo, y lo mejor es que <strong>te servirá toda la carrera</strong>.»</p>
+      </div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-card">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h26a4 4 0 0 1 4 4v32H12a4 4 0 0 1-4-4z"/><path d="M14 14h16M14 20h16M14 26h10"/></svg>
+        <h3>Un diccionario común</h3>
+        <p>Tiene miles de palabras de todos los temas. Es difícil encontrar justo lo que necesitas de computación.</p>
+      </div>
+      <div class="vs-card good">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="4"/><path d="M6 18h36M18 18v24"/><path d="M24 25h12M24 31h12M24 37h8"/></svg>
+        <h3>Tu glosario técnico</h3>
+        <p>Tiene solo las palabras que tú usas en tu carrera, con la explicación que tú entiendes y tus propios ejemplos.</p>
+      </div>
+    </div>
+
+    <div class="big-idea">
+      Glosario = tabla de consulta: <span style="font-family:var(--font-mono); font-size:.8em;">término → significado</span>
+      <small>BILINGÜE = INGLÉS + ESPAÑOL</small>
+    </div>
+  </section>
+
+  <!-- ═════════ ANATOMÍA DE UNA ENTRADA ═════════ -->
+  <section class="section" id="anatomia">
+    <h2 class="section-title">Las partes de una entrada de glosario</h2>
+    <p>Cada palabra de tu glosario se llama <strong>entrada</strong> (<em>entry</em>). Una buena entrada siempre tiene las mismas partes. Observa este ejemplo con la palabra <code class="inline">router</code>:</p>
+
+    <div class="anatomy">
+      <div class="entry-card" role="img" aria-label="Ejemplo de entrada de glosario para la palabra router">
+        <div class="entry-top">
+          <div>
+            <span class="entry-term"><span class="pin">1</span>router<span class="entry-pos"><span class="pin">2</span>n.</span></span>
+            <span class="entry-es"><span class="pin">3</span>enrutador (router)</span>
+          </div>
+          <div class="entry-pic" title="Imagen de apoyo">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="26" width="38" height="12" rx="3"/><path d="M12 32h.01M18 32h.01"/><path d="M14 26L10 12M34 26l4-14"/><path d="M20 16a6 6 0 0 1 8 0M17 11a11 11 0 0 1 14 0"/></svg>
+          </div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-line"><b><span class="pin">4</span>Definition</b><span class="en">A device that connects networks and sends data between them.</span></div>
+          <div class="entry-line"><b><span class="pin">5</span>Example</b><span class="en">The router connects the laptop to the Internet.</span></div>
+          <span class="entry-cat"><span style="margin-right:.25rem;">6</span> Herramienta</span>
+        </div>
+      </div>
+
+      <ol class="legend">
+        <li><span class="n">1</span><span><strong>Term</strong> (término): la palabra en inglés, siempre en negritas o en un color que resalte.</span></li>
+        <li><span class="n">2</span><span><strong>Part of speech</strong> (categoría gramatical): <em>n.</em> sustantivo, <em>v.</em> verbo, <em>adj.</em> adjetivo.</span></li>
+        <li><span class="n">3</span><span><strong>Translation</strong> (traducción): la palabra equivalente en español.</span></li>
+        <li><span class="n">4</span><span><strong>Definition</strong> (definición): qué es o para qué sirve, en inglés sencillo.</span></li>
+        <li><span class="n">5</span><span><strong>Example</strong> (ejemplo): una oración corta donde se use la palabra.</span></li>
+        <li><span class="n">6</span><span><strong>Category</strong> (categoría): herramienta, componente o proceso. Y si puedes, agrega una <strong>imagen</strong>: por eso el glosario es <em>ilustrado</em>.</span></li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Truco:</strong> si completas estas seis partes en cada palabra, tu glosario se verá profesional y será realmente útil para estudiar.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ CATEGORÍA GRAMATICAL ═════════ -->
+  <section class="section" id="categoria">
+    <h2 class="section-title">¿La palabra es cosa, acción o descripción?</h2>
+    <p>Antes de escribir una entrada, decide <strong>qué tipo de palabra es</strong>. En los glosarios se usan abreviaturas:</p>
+
+    <div class="table-scroll"><table>
+      <thead><tr><th>Abreviatura</th><th>Inglés</th><th>Español</th><th>Ejemplos de computación</th></tr></thead>
+      <tbody>
+        <tr><td><strong>n.</strong></td><td>noun</td><td>sustantivo (cosa, lugar, persona)</td><td>file (archivo) · server (servidor) · screen (pantalla)</td></tr>
+        <tr><td><strong>v.</strong></td><td>verb</td><td>verbo (acción)</td><td>save (guardar) · install (instalar) · delete (borrar)</td></tr>
+        <tr><td><strong>adj.</strong></td><td>adjective</td><td>adjetivo (describe)</td><td>wireless (inalámbrico) · digital (digital) · secure (seguro)</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout">
+      <p><strong>Ojo:</strong> algunas palabras pueden ser dos tipos. <em>Backup</em> es sustantivo (<em>“Make a backup”</em>: «haz un respaldo») y <em>back up</em> es verbo (<em>“Back up your files”</em>: «respalda tus archivos»). Por eso es importante poner la abreviatura.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ CATEGORÍAS DEL GLOSARIO ═════════ -->
+  <section class="section" id="categorias">
+    <h2 class="section-title">Las tres categorías de tu glosario</h2>
+    <p>Tu glosario organiza las palabras en tres grupos, igual que organizas tus archivos en carpetas. Aquí tienes los tres, ya aplicados a Sistemas Computacionales:</p>
+
+    <div class="cat-grid">
+      <div class="cat-col">
+        <header>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 6a10 10 0 0 0-9 14L6 35l7 7 15-15A10 10 0 0 0 42 18l-7 7-6-2-2-6 7-7a10 10 0 0 0-4-4z"/></svg>
+          <div><b>Herramientas</b><span>Tools</span></div>
+        </header>
+        <p class="def">Lo que <strong>usas</strong> para trabajar.</p>
+        <ul>
+          <li><code>text editor</code><span>editor de texto</span></li>
+          <li><code>compiler</code><span>compilador</span></li>
+          <li><code>terminal</code><span>terminal</span></li>
+          <li><code>browser</code><span>navegador</span></li>
+          <li><code>router</code><span>enrutador</span></li>
+          <li><code>firewall</code><span>cortafuegos</span></li>
+        </ul>
+      </div>
+      <div class="cat-col">
+        <header>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="3"/><rect x="18" y="18" width="12" height="12"/><path d="M18 6v6M24 6v6M30 6v6M18 36v6M24 36v6M30 36v6M6 18h6M6 24h6M6 30h6M36 18h6M36 24h6M36 30h6"/></svg>
+          <div><b>Componentes</b><span>Components</span></div>
+        </header>
+        <p class="def">Las <strong>piezas</strong> físicas de un equipo.</p>
+        <ul>
+          <li><code>motherboard</code><span>tarjeta madre</span></li>
+          <li><code>hard drive</code><span>disco duro</span></li>
+          <li><code>SSD</code><span>unidad de estado sólido</span></li>
+          <li><code>power supply</code><span>fuente de poder</span></li>
+          <li><code>cable</code><span>cable</span></li>
+          <li><code>keyboard</code><span>teclado</span></li>
+        </ul>
+      </div>
+      <div class="cat-col">
+        <header>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 24a16 16 0 1 1-5-11.6"/><path d="M40 6v8h-8"/></svg>
+          <div><b>Procesos</b><span>Processes</span></div>
+        </header>
+        <p class="def">Las <strong>acciones</strong> que se realizan.</p>
+        <ul>
+          <li><code>install</code><span>instalar</span></li>
+          <li><code>compile</code><span>compilar</span></li>
+          <li><code>debug</code><span>depurar (corregir errores)</span></li>
+          <li><code>back up</code><span>respaldar</span></li>
+          <li><code>update</code><span>actualizar</span></li>
+          <li><code>deploy</code><span>desplegar (publicar)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mixtle-tip small reverse">
+      <img src="imagen2.png" alt="Mixtle, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <p><strong>Regla fácil:</strong> si lo puedes <em>tocar</em> es un componente; si lo <em>usas</em> para trabajar es una herramienta; si es algo que <em>haces</em>, es un proceso. Así puedes comparar tu glosario con una lista de carpetas: cada palabra vive en la suya.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ SIGLAS ═════════ -->
+  <section class="section" id="siglas">
+    <h2 class="section-title">Las siglas que no pueden faltar</h2>
+    <p>En computación casi todo tiene una <strong>sigla</strong> (<em>acronym</em>). Una buena entrada de glosario incluye lo que significa cada letra:</p>
+
+    <div class="table-scroll"><table>
+      <thead><tr><th>Sigla</th><th>Significa en inglés</th><th>En español</th><th>Se lee (aprox.)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="acr">CPU</span></td><td>Central Processing Unit</td><td>Unidad central de procesamiento</td><td class="pron">si-pi-yu</td></tr>
+        <tr><td><span class="acr">RAM</span></td><td>Random Access Memory</td><td>Memoria de acceso aleatorio</td><td class="pron">ram</td></tr>
+        <tr><td><span class="acr">OS</span></td><td>Operating System</td><td>Sistema operativo</td><td class="pron">ou-és</td></tr>
+        <tr><td><span class="acr">USB</span></td><td>Universal Serial Bus</td><td>Bus serie universal</td><td class="pron">yu-és-bi</td></tr>
+        <tr><td><span class="acr">LAN</span></td><td>Local Area Network</td><td>Red de área local</td><td class="pron">lan</td></tr>
+        <tr><td><span class="acr">URL</span></td><td>Uniform Resource Locator</td><td>Localizador uniforme de recursos (dirección web)</td><td class="pron">yu-ar-él</td></tr>
+        <tr><td><span class="acr">UI</span></td><td>User Interface</td><td>Interfaz de usuario</td><td class="pron">yu-ái</td></tr>
+        <tr><td><span class="acr">SSD</span></td><td>Solid State Drive</td><td>Unidad de estado sólido</td><td class="pron">és-és-di</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout note">
+      <p>Fíjate: las siglas se leen <strong>letra por letra</strong> (CPU = «si-pi-yu») excepto algunas que se leen como una palabra (RAM, LAN). Practica decirlas en voz alta; las vas a necesitar en la Unidad 2, de comunicación oral.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.75rem 0 .2rem;">Palabras que no se traducen</h3>
+    <p>Algunos términos se usan igual en español. Aun así, ponlos en tu glosario con su significado:</p>
+    <div class="loan">
+      <div>software<small>programas</small></div>
+      <div>hardware<small>partes físicas</small></div>
+      <div>firewall<small>cortafuegos</small></div>
+      <div>email<small>correo electrónico</small></div>
+      <div>online<small>en línea</small></div>
+      <div>backup<small>respaldo</small></div>
+    </div>
+  </section>
+
+  <!-- ═════════ DEFINICIONES ═════════ -->
+  <section class="section" id="definiciones">
+    <h2 class="section-title">Cómo escribir una definición sencilla</h2>
+    <p>Las definiciones en inglés técnico siguen casi siempre la misma receta. Con ella no necesitas ser experto en inglés, solo seguir la fórmula:</p>
+
+    <div class="formula-block">
+      <span class="section-label" style="margin-bottom:.5rem;">Fórmula</span>
+      <code class="formula">A / An + término + is + (tipo de cosa) + that + (para qué sirve)</code>
+      <p class="formula-note">Es el presente simple que ya viste en el Tema 1.2. Para acciones se usa: <strong>To</strong> + verbo + (qué haces). Ejemplo: <em>To install is to put a program on a computer.</em></p>
+    </div>
+
+    <div class="table-scroll"><table>
+      <thead><tr><th>Término</th><th>Definición en inglés</th><th>Significa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>router</strong></td><td>A <strong>router is a device that</strong> connects networks.</td><td>Un router es un dispositivo que conecta redes.</td></tr>
+        <tr><td><strong>firewall</strong></td><td>A <strong>firewall is a program that</strong> protects a network.</td><td>Un firewall es un programa que protege una red.</td></tr>
+        <tr><td><strong>SSD</strong></td><td>An <strong>SSD is a part that</strong> stores your files.</td><td>Un SSD es una pieza que guarda tus archivos.</td></tr>
+        <tr><td><strong>debug</strong></td><td><strong>To debug is to</strong> find and fix errors in code.</td><td>Depurar es encontrar y corregir errores en el código.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout">
+      <p><strong>Usa «A» o «An»:</strong> se usa <em>an</em> cuando la palabra empieza con sonido de vocal: <em>an SSD</em> (se lee «an és-és-di»), <em>an email</em>, <em>an operating system</em>. Con las demás se usa <em>a</em>: <em>a router</em>, <em>a cable</em>.</p>
+    </div>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«Una definición corta y clara vale más que una larga y confusa. Si tu definición cabe en <strong>una sola línea</strong>, vas por buen camino. Puedes usar herramientas como un traductor o un asistente de IA para <strong>revisar</strong> tu texto, pero siempre <strong>compara con un manual o un diccionario técnico</strong>: a veces las herramientas traducen palabra por palabra y se equivocan.»</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ EJEMPLO RESUELTO ═════════ -->
+  <section class="section" id="ejemplo">
+    <h2 class="section-title">Ejemplo resuelto: construimos la entrada de «firewall»</h2>
+
+    <div class="example-block">
+      <div class="example-header">Paso a paso para una entrada de glosario</div>
+      <div class="example-body">
+        <ol class="step-list">
+          <li><span class="step-n">1</span><span class="step-content"><strong>Elige el término</strong> (lo viste en un manual o en tu clase): <code class="inline">firewall</code>.</span></li>
+          <li><span class="step-n">2</span><span class="step-content"><strong>Decide su tipo:</strong> es una cosa, entonces <em>n.</em> (sustantivo).</span></li>
+          <li><span class="step-n">3</span><span class="step-content"><strong>Escribe la traducción:</strong> <em>cortafuegos</em> (en español muchas personas dicen también «firewall»).</span></li>
+          <li><span class="step-n">4</span><span class="step-content"><strong>Redacta la definición</strong> con la fórmula: <em>A firewall is a program that protects a network.</em></span></li>
+          <li><span class="step-n">5</span><span class="step-content"><strong>Crea un ejemplo</strong> con una oración corta: <em>The firewall blocks unknown connections.</em> (presente simple del Tema 1.2).</span></li>
+          <li><span class="step-n">6</span><span class="step-content"><strong>Clasifícalo y agrega una imagen:</strong> categoría <em>Herramienta</em>; ilustra con un ícono de escudo o un diagrama de red.</span></li>
+        </ol>
+
+        <div class="entry-card" style="margin-top:1.1rem;" role="img" aria-label="Entrada de glosario terminada: firewall">
+          <div class="entry-top">
+            <div>
+              <span class="entry-term">firewall<span class="entry-pos">n.</span></span>
+              <span class="entry-es">cortafuegos</span>
+            </div>
+            <div class="entry-pic">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 5l15 5v12c0 10-6 17-15 21C15 39 9 32 9 22V10z"/><path d="M17 24l5 5 9-10"/></svg>
+            </div>
+          </div>
+          <div class="entry-body">
+            <div class="entry-line"><b>Definition</b><span class="en">A firewall is a program that protects a network.</span></div>
+            <div class="entry-line"><b>Example</b><span class="en">The firewall blocks unknown connections.</span></div>
+            <span class="entry-cat">Herramienta</span>
+          </div>
+        </div>
+        <div class="result-line">Resultado: una entrada completa en solo seis pasos. Repite este proceso con cada término de tu glosario.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ ACTIVIDAD PRÁCTICA ═════════ -->
+  <section class="section" id="practica">
+    <h2 class="section-title">Taller práctico</h2>
+    <p>Resuelve los ejercicios 1 y 2 y presiona <strong>Revisar</strong> para ver tus aciertos. Después usa el ejercicio 3 para practicar la escritura de tu primera entrada.</p>
+
+    <!-- Ejercicio 1 -->
+    <div class="card ex" id="ex1">
+      <span class="card-title">Ejercicio 1 · Clasifica cada término</span>
+      <p>Elige si cada palabra es una <strong>herramienta</strong>, un <strong>componente</strong> o un <strong>proceso</strong>.</p>
+
+      <div class="ex-item" data-ans="Herramienta"><span class="q"><code>text editor</code> <span class="ghost-text">(editor de texto)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Componente"><span class="q"><code>motherboard</code> <span class="ghost-text">(tarjeta madre)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Proceso"><span class="q"><code>install</code> <span class="ghost-text">(instalar)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Herramienta"><span class="q"><code>terminal</code></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Componente"><span class="q"><code>power supply</code> <span class="ghost-text">(fuente de poder)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Proceso"><span class="q"><code>back up</code> <span class="ghost-text">(respaldar)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Herramienta"><span class="q"><code>compiler</code> <span class="ghost-text">(compilador)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Componente"><span class="q"><code>SSD</code></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Proceso"><span class="q"><code>debug</code> <span class="ghost-text">(depurar)</span></span><select></select><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check">Revisar</button>
+        <button class="btn ghost" data-act="show">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 2 -->
+    <div class="card ex" id="ex2">
+      <span class="card-title">Ejercicio 2 · ¿Qué término define cada oración?</span>
+      <p>Lee cada definición y elige el término correcto.</p>
+
+      <div class="ex-item" data-ans="router"><span class="q">A device that connects networks and sends data. <span class="ghost-text">(Un dispositivo que conecta redes.)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="firewall"><span class="q">A program that protects a network. <span class="ghost-text">(Un programa que protege una red.)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="back up"><span class="q">To make a copy of your files. <span class="ghost-text">(Hacer una copia de tus archivos.)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="hard drive"><span class="q">A part that stores your files. <span class="ghost-text">(Una pieza que guarda tus archivos.)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="debug"><span class="q">To find and fix errors in code. <span class="ghost-text">(Encontrar y corregir errores en el código.)</span></span><select></select><span class="mark"></span></div>
+      <div class="ex-item" data-ans="text editor"><span class="q">A program where you write code. <span class="ghost-text">(Un programa donde escribes código.)</span></span><select></select><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check">Revisar</button>
+        <button class="btn ghost" data-act="show">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 3 -->
+    <div class="card" id="ex3">
+      <span class="card-title">Ejercicio 3 · Escribe tu primera entrada</span>
+      <p>Elige un término de computación que ya conozcas (por ejemplo <em>keyboard, server, update, SSD</em>) y llena los campos. La tarjeta de la derecha se arma sola. Esta práctica no se califica.</p>
+
+      <div class="builder">
+        <div>
+          <div class="field"><label for="f-term">1. Término en inglés</label><input id="f-term" type="text" maxlength="40" placeholder="Ejemplo: server" autocomplete="off"></div>
+          <div class="field"><label for="f-pos">2. Tipo de palabra</label>
+            <select id="f-pos"><option value="">Elige…</option><option value="n.">n. (sustantivo)</option><option value="v.">v. (verbo)</option><option value="adj.">adj. (adjetivo)</option></select></div>
+          <div class="field"><label for="f-es">3. Traducción al español</label><input id="f-es" type="text" maxlength="50" placeholder="Ejemplo: servidor" autocomplete="off"></div>
+          <div class="field"><label for="f-def">4. Definición en inglés</label><textarea id="f-def" maxlength="140" placeholder="Ejemplo: A server is a computer that stores and shares data."></textarea><small>Usa la fórmula: A / An + término + is + … that …</small></div>
+          <div class="field"><label for="f-ex">5. Ejemplo en inglés</label><input id="f-ex" type="text" maxlength="120" placeholder="Ejemplo: The server stores our files." autocomplete="off"></div>
+          <div class="field"><label for="f-cat">6. Categoría</label>
+            <select id="f-cat"><option value="">Elige…</option><option>Herramienta</option><option>Componente</option><option>Proceso</option></select></div>
+        </div>
+
+        <div>
+          <div class="entry-card" aria-live="polite">
+            <div class="entry-top">
+              <div>
+                <span class="entry-term"><span id="p-term" class="ghost-text">término</span><span class="entry-pos" id="p-pos"></span></span>
+                <span class="entry-es" id="p-es"><span class="ghost-text">traducción</span></span>
+              </div>
+              <div class="entry-pic" title="Aquí va tu imagen">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="3"/><circle cx="17" cy="20" r="3.5"/><path d="M6 34l11-9 8 7 6-5 11 9"/></svg>
+              </div>
+            </div>
+            <div class="entry-body">
+              <div class="entry-line"><b>Definition</b><span class="en" id="p-def"><span class="ghost-text">Tu definición aparecerá aquí.</span></span></div>
+              <div class="entry-line"><b>Example</b><span class="en" id="p-ex"><span class="ghost-text">Tu ejemplo aparecerá aquí.</span></span></div>
+              <span class="entry-cat" id="p-cat" hidden></span>
+            </div>
+          </div>
+          <div class="callout note" style="margin-top:1rem;"><p>Cuando termines, compara tu tarjeta con las seis partes de la sección «Las partes de una entrada de glosario». ¿Está completa?</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ PRODUCTO ═════════ -->
+  <section class="section" id="producto">
+    <h2 class="section-title">Tu producto de la Unidad 1: el glosario técnico ilustrado</h2>
+
+    <div class="concept-box">
+      <span class="concept-title">¿Qué vas a entregar?</span>
+      <p>Un <strong>glosario técnico ilustrado bilingüe (inglés-español)</strong> de herramientas, componentes y procesos de Sistemas Computacionales. Cada término debe llevar su traducción, una definición, un ejemplo en una oración y, si es posible, una imagen. Puedes elaborarlo en <strong>Google Docs</strong>, <strong>Google Sites</strong> o en la plataforma de portafolio que indique tu asesor. Tu asesor confirmará el número de términos, la fecha de entrega y la forma de enviarlo.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-ui); font-size:1rem; color:var(--guinda-mid); margin:1.5rem 0 .4rem;">Lista de verificación: revisa tu glosario antes de entregarlo</h3>
+    <div class="card" id="checkbox-card">
+      <ul class="checklist" id="checklist">
+        <li><label><input type="checkbox"> Cada término está escrito en inglés y tiene su traducción al español.</label></li>
+        <li><label><input type="checkbox"> Cada entrada indica el tipo de palabra (n., v. o adj.).</label></li>
+        <li><label><input type="checkbox"> Las definiciones son cortas y siguen la fórmula «A / An … is … that …».</label></li>
+        <li><label><input type="checkbox"> Cada término tiene un ejemplo en una oración completa.</label></li>
+        <li><label><input type="checkbox"> Los términos están clasificados en herramientas, componentes y procesos.</label></li>
+        <li><label><input type="checkbox"> Los términos están en orden alfabético dentro de cada categoría.</label></li>
+        <li><label><input type="checkbox"> Cada entrada tiene una imagen o ícono que ayuda a recordarla.</label></li>
+        <li><label><input type="checkbox"> Las siglas incluyen lo que significan sus letras (por ejemplo, CPU = Central Processing Unit).</label></li>
+        <li><label><input type="checkbox"> Revisé la ortografía en inglés y en español.</label></li>
+      </ul>
+      <div class="check-total" id="check-total" aria-live="polite">Listo: 0 de 9</div>
+      <div class="meter" aria-hidden="true"><i id="check-meter"></i></div>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Consejo final:</strong> no esperes a la fecha de entrega. Agrega <strong>tres términos cada día</strong> mientras lees manuales, documentación o aplicaciones en inglés. Así tu glosario crece de manera natural y se vuelve una herramienta de verdad para tu carrera.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ CIERRE ═════════ -->
+  <section class="section" id="cierre">
+    <h2 class="section-title">Cierre de la sesión</h2>
+    <div class="concept-box">
+      <span class="concept-title">Síntesis</span>
+      <p>Hoy aprendiste a construir un <strong>glosario bilingüe</strong>. Cada entrada lleva seis partes: <strong>término, tipo de palabra, traducción, definición, ejemplo y categoría</strong> (con imagen si es posible). Clasificaste los términos de sistemas computacionales en <strong>herramientas, componentes y procesos</strong>, conociste las siglas más comunes y practicaste la fórmula para escribir definiciones sencillas: <em>A / An + término + is + … that …</em>. Con esto cierras la <strong>Unidad 1</strong>. En la Unidad 2 pasarás de leer y escribir a <strong>hablar</strong>: vas a presentar ideas técnicas en inglés, y el vocabulario de tu glosario será tu mejor apoyo.</p>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <h2 class="section-title">Conclusión</h2>
+    <p>Un profesional de sistemas aprende cientos de términos nuevos durante su carrera: lenguajes, herramientas, protocolos y componentes. Nadie los memoriza todos de una vez; lo que hace la diferencia es tener un <strong>método para organizarlos</strong>. Tu glosario técnico ilustrado es justo eso: un banco de consulta propio, escrito con tus palabras y con ejemplos que tú entiendes. Mientras más lo uses y lo actualices, más fácil será leer documentación, entender manuales y comunicarte en inglés dentro del área de Sistemas Computacionales.</p>
+  </section>
+
+  <section class="section" id="referencias">
+    <h2 class="section-title">Referencias bibliográficas</h2>
+    <p style="font-size:.92rem; color:var(--ink-secondary);">Glendinning, E. H. y McEwan, J. (2021). <em>Oxford English for computing</em> (Nueva edición revisada). Oxford University Press.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="imagen1.png" alt="Mixtle">
+    <span><strong>IEDEP</strong> · Instituto de Educación Digital del Estado de Puebla</span>
+  </div>
+  <span>Inglés para Ingeniería I · Mtro. José Armando Vera Rodríguez</span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var CATS = ["Componente", "Herramienta", "Proceso"];
+  var TERMS = ["back up", "debug", "firewall", "hard drive", "router", "text editor"];
+
+  function fillSelect(sel, list) {
+    var first = document.createElement("option");
+    first.value = ""; first.textContent = "Elige…";
+    sel.appendChild(first);
+    list.forEach(function (v) {
+      var o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
+    });
+  }
+  document.querySelectorAll("#ex1 select").forEach(function (s) { fillSelect(s, CATS); });
+  document.querySelectorAll("#ex2 select").forEach(function (s) { fillSelect(s, TERMS); });
+
+  function clearMarks(box) {
+    box.querySelectorAll(".ex-item").forEach(function (it) {
+      it.classList.remove("ok", "bad");
+      it.querySelector(".mark").textContent = "";
+    });
+  }
+
+  document.querySelectorAll(".ex").forEach(function (box) {
+    var score = box.querySelector(".ex-score");
+    box.addEventListener("click", function (e) {
+      var act = e.target.getAttribute && e.target.getAttribute("data-act");
+      if (!act) return;
+      var items = box.querySelectorAll(".ex-item");
+
+      if (act === "check") {
+        var ok = 0, empty = 0;
+        items.forEach(function (it) {
+          var v = it.querySelector("select").value;
+          it.classList.remove("ok", "bad");
+          if (v === "") { empty++; it.classList.add("bad"); it.querySelector(".mark").textContent = "Sin responder"; return; }
+          if (v === it.getAttribute("data-ans")) { ok++; it.classList.add("ok"); it.querySelector(".mark").textContent = "Correcto"; }
+          else { it.classList.add("bad"); it.querySelector(".mark").textContent = "Revisa de nuevo"; }
+        });
+        score.textContent = "Aciertos: " + ok + " de " + items.length +
+          (ok === items.length ? " · ¡Excelente!" : (empty ? " · Te faltan " + empty + " por responder" : " · ¡Casi! Corrige y vuelve a revisar"));
+      }
+      if (act === "show") {
+        clearMarks(box);
+        items.forEach(function (it) {
+          it.querySelector("select").value = it.getAttribute("data-ans");
+          it.classList.add("ok");
+          it.querySelector(".mark").textContent = "Respuesta";
+        });
+        score.textContent = "Estas son las respuestas correctas.";
+      }
+      if (act === "reset") {
+        items.forEach(function (it) { it.querySelector("select").value = ""; });
+        clearMarks(box);
+        score.textContent = "";
+      }
+    });
+    box.addEventListener("change", function () { clearMarks(box); score.textContent = ""; });
+  });
+
+  // ── Constructor de entradas (ejercicio 3) ──
+  function ghost(t) { var s = document.createElement("span"); s.className = "ghost-text"; s.textContent = t; return s; }
+  function setText(id, value, placeholder) {
+    var el = document.getElementById(id);
+    el.textContent = "";
+    if (value) { el.textContent = value; } else { el.appendChild(ghost(placeholder)); }
+  }
+  function updatePreview() {
+    var term = document.getElementById("f-term").value.trim();
+    var pos = document.getElementById("f-pos").value;
+    var es = document.getElementById("f-es").value.trim();
+    var def = document.getElementById("f-def").value.trim();
+    var ex = document.getElementById("f-ex").value.trim();
+    var cat = document.getElementById("f-cat").value;
+
+    var t = document.getElementById("p-term");
+    t.textContent = "";
+    if (term) { t.className = ""; t.textContent = term; } else { t.className = "ghost-text"; t.textContent = "término"; }
+    document.getElementById("p-pos").textContent = pos;
+    setText("p-es", es, "traducción");
+    setText("p-def", def, "Tu definición aparecerá aquí.");
+    setText("p-ex", ex, "Tu ejemplo aparecerá aquí.");
+    var c = document.getElementById("p-cat");
+    if (cat) { c.hidden = false; c.textContent = cat; } else { c.hidden = true; }
+  }
+  ["f-term", "f-pos", "f-es", "f-def", "f-ex", "f-cat"].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener("input", updatePreview);
+    el.addEventListener("change", updatePreview);
+  });
+
+  // ── Lista de verificación ──
+  var boxes = document.querySelectorAll("#checklist input[type=checkbox]");
+  function updateChecks() {
+    var n = 0;
+    boxes.forEach(function (b) { if (b.checked) n++; });
+    document.getElementById("check-total").textContent = "Listo: " + n + " de " + boxes.length + (n === boxes.length ? " · ¡Tu glosario está listo para entregar!" : "");
+    document.getElementById("check-meter").style.width = (n / boxes.length * 100) + "%";
+  }
+  boxes.forEach(function (b) { b.addEventListener("change", updateChecks); });
+})();
+</script>
+
+</body>
+</html>

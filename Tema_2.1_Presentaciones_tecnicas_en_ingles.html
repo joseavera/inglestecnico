@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 2.1 — Presentaciones técnicas en inglés | Inglés para Ingeniería I</title>
+<meta name="description" content="Material de clase — Inglés para Ingeniería I, Unidad 2, Tema 2.1: cómo preparar y dar una presentación técnica corta en inglés, aplicado a Sistemas Computacionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ── Extensiones propias de esta clase (no modifican base.css) ── */
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+
+  code.inline {
+    font-family: var(--font-mono);
+    font-size: .86em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .05rem .35rem;
+    color: var(--guinda-dark);
+  }
+
+  /* Mixtle */
+  .mixtle-tip {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    background: var(--guinda-light); border: 1px solid #D8A8BA;
+    border-radius: var(--radius-lg); padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .mixtle-tip img { width: 110px; height: auto; flex-shrink: 0; }
+  .mixtle-bubble p { font-size: .97rem; line-height: 1.7; color: var(--ink); margin-bottom: 0; }
+  .mixtle-tip.small img { width: 80px; }
+  .mixtle-tip.reverse { flex-direction: row-reverse; }
+  @media (max-width: 600px) {
+    .mixtle-tip, .mixtle-tip.reverse { flex-direction: column; align-items: center; }
+  }
+
+  /* Idea clave en una línea */
+  .big-idea {
+    text-align: center; margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem; border-radius: var(--radius-lg);
+    background: var(--guinda); color: var(--white);
+    font-family: var(--font-display); font-size: 1.45rem; line-height: 1.35; font-weight: 600;
+  }
+  .big-idea small { display:block; margin-top:.4rem; font-family: var(--font-ui); font-size: .8rem; font-weight: 500; letter-spacing: .04em; opacity: .85; }
+
+  /* Comparación novela vs manual */
+  .vs-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+  .vs-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.2rem; background: var(--off-white); }
+  .vs-card.good { border-color: var(--guinda); background: var(--guinda-light); }
+  .vs-card h3 { font-family: var(--font-ui); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--guinda); margin-bottom: .5rem; }
+  .vs-card p { font-size: .95rem; margin: 0; }
+  .vs-card svg { width: 38px; height: 38px; color: var(--guinda); margin-bottom: .4rem; }
+  @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } }
+
+  /* Anatomía de un manual */
+  .anatomy { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; margin: 1.25rem 0; }
+  @media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+  .manual-mock {
+    background: var(--white); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    padding: 1.1rem 1.2rem 1.3rem; position: relative;
+  }
+  .mock-bar { display:flex; gap:.35rem; margin-bottom:.8rem; }
+  .mock-bar i { width:9px; height:9px; border-radius:50%; background: var(--border-strong); display:block; }
+  .mock-part { position: relative; padding: .55rem .7rem .55rem 2.4rem; margin-bottom: .55rem; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--off-white); }
+  .mock-part .n {
+    position:absolute; left:.55rem; top:.55rem; width:1.35rem; height:1.35rem; border-radius:50%;
+    background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mock-part b { font-family: var(--font-ui); font-size: .82rem; color: var(--guinda-dark); display:block; }
+  .mock-part span { font-family: var(--font-mono); font-size: .76rem; color: var(--ink-secondary); display:block; line-height:1.5; }
+  .mock-part.warn { border-color:#C98A00; background:#FFF8E6; }
+  .mock-part.warn .n { background:#B37700; }
+  .mock-part.title-part b { font-family: var(--font-display); font-size: 1.15rem; }
+  .legend { list-style:none; margin:0; padding:0; }
+  .legend li { display:flex; gap:.7rem; padding:.55rem 0; border-bottom: 1px solid var(--border); font-size:.93rem; line-height:1.5; }
+  .legend li:last-child { border-bottom:none; }
+  .legend .n { flex:0 0 1.5rem; height:1.5rem; border-radius:50%; background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:.15rem; }
+  .legend .n.w { background:#B37700; }
+  .legend em { color: var(--guinda-dark); }
+
+  /* Chips de palabras */
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0 1.1rem; }
+  .chip {
+    font-family: var(--font-mono); font-size:.84rem; padding:.3rem .75rem;
+    background: var(--guinda-light); border:1px solid #D8A8BA; border-radius:999px; color: var(--guinda-dark);
+  }
+  .chip small { font-family: var(--font-ui); font-size:.7rem; color: var(--ink-secondary); margin-left:.35rem; }
+
+  .pron { font-family: var(--font-ui); font-size:.8rem; color: var(--ink-secondary); font-style: italic; }
+
+  /* Avisos tipo manual */
+  .alerts { display:grid; gap:.8rem; margin: 1.25rem 0; }
+  .alert-row { display:grid; grid-template-columns: 112px 1fr; gap: 1rem; align-items:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem 1rem; background: var(--white); }
+  .alert-row .lbl { display:flex; align-items:center; gap:.45rem; font-family: var(--font-ui); font-weight:700; font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; }
+  .alert-row .lbl svg { width:22px; height:22px; flex-shrink:0; }
+  .alert-row p { font-size:.93rem; line-height:1.55; margin:0; }
+  .alert-row .ex { display:block; font-family: var(--font-mono); font-size:.82rem; margin-top:.3rem; color: var(--ink); }
+  .alert-row.note    { border-left:5px solid var(--guinda);   } .alert-row.note .lbl    { color: var(--guinda); }
+  .alert-row.tip     { border-left:5px solid #1F7A5C;         } .alert-row.tip .lbl     { color:#1F7A5C; }
+  .alert-row.warning { border-left:5px solid #B37700;         } .alert-row.warning .lbl { color:#9A6600; }
+  .alert-row.caution { border-left:5px solid #B3261E;         } .alert-row.caution .lbl { color:#B3261E; }
+  @media (max-width: 600px) { .alert-row { grid-template-columns: 1fr; gap:.4rem; } }
+
+  /* Pasos tipo tarjeta */
+  .cmd-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:.8rem; margin:1.2rem 0; }
+  .cmd { border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .95rem; background: var(--off-white); }
+  .cmd .v { font-family: var(--font-mono); font-weight:500; font-size:1.02rem; color: var(--guinda); }
+  .cmd .es { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); text-transform:uppercase; letter-spacing:.05em; }
+  .cmd .eg { font-size:.88rem; line-height:1.45; margin-top:.35rem; }
+
+  .no-do {
+    border:2px solid #B3261E; background:#FFF3F2; border-radius: var(--radius-md); padding:.8rem 1.1rem; margin:1rem 0;
+    font-family: var(--font-ui); font-size:.92rem;
+  }
+  .no-do b { color:#B3261E; }
+
+  /* Ficha técnica */
+  .spec-card { border:1px solid var(--border-strong); border-radius: var(--radius-lg); overflow:hidden; box-shadow: var(--shadow-md); margin:1.25rem 0; background: var(--white); }
+  .spec-head { background: var(--guinda); color: var(--white); padding:.9rem 1.3rem; display:flex; align-items:center; gap:.9rem; }
+  .spec-head svg { width:34px; height:34px; flex-shrink:0; }
+  .spec-head b { font-family: var(--font-display); font-size:1.35rem; display:block; line-height:1.1; }
+  .spec-head span { font-family: var(--font-ui); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; opacity:.85; }
+  .spec-row { display:grid; grid-template-columns: 1.1fr 1.2fr 1.1fr; gap:.8rem; padding:.55rem 1.3rem; border-bottom:1px solid var(--border); align-items:baseline; font-size:.93rem; }
+  .spec-row:nth-child(even) { background: var(--surface); }
+  .spec-row:last-child { border-bottom:none; }
+  .spec-row .k { font-family: var(--font-ui); font-weight:600; font-size:.82rem; color: var(--guinda-dark); }
+  .spec-row .v { font-family: var(--font-mono); font-size:.86rem; }
+  .spec-row .es { font-size:.86rem; color: var(--ink-secondary); }
+  .spec-row.hd { background: var(--guinda-light); font-family: var(--font-ui); font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color: var(--guinda); }
+  @media (max-width: 600px) {
+    .spec-row { grid-template-columns: 1fr; gap:.1rem; padding:.6rem 1rem; }
+    .spec-row.hd { display:none; }
+  }
+
+  .units { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:.7rem; margin:1rem 0; }
+  .unit { text-align:center; border:1px solid var(--border); border-radius: var(--radius-md); padding:.8rem .5rem; background: var(--off-white); }
+  .unit b { display:block; font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); }
+  .unit span { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); line-height:1.35; display:block; margin-top:.15rem; }
+
+  .phrase-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap:.7rem; margin:1rem 0; }
+  .phrase { border:1px solid var(--border); border-radius: var(--radius-md); padding:.75rem .95rem; background: var(--white); }
+  .phrase b { font-family: var(--font-mono); font-size:.92rem; color: var(--guinda); display:block; }
+  .phrase span { font-size:.88rem; color: var(--ink-secondary); }
+
+  /* Estrategia: 3 pasos */
+  .flow { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin:1.4rem 0; position:relative; }
+  .flow-step { border:1px solid var(--border-strong); border-radius: var(--radius-lg); padding:1.2rem 1.1rem 1.1rem; background: var(--white); text-align:center; position:relative; box-shadow: var(--shadow-sm); }
+  .flow-step svg { width:48px; height:48px; color: var(--guinda); margin-bottom:.4rem; }
+  .flow-step .num { position:absolute; top:-.7rem; left:50%; transform:translateX(-50%); background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-size:.72rem; font-weight:700; padding:.15rem .7rem; border-radius:999px; letter-spacing:.06em; }
+  .flow-step h3 { font-family: var(--font-mono); font-size:1.15rem; color: var(--guinda); margin-bottom:.1rem; }
+  .flow-step .es { font-family: var(--font-ui); font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-secondary); margin-bottom:.5rem; display:block; }
+  .flow-step p { font-size:.9rem; line-height:1.55; margin:0; }
+  .flow-step .code-like { display:block; margin-top:.6rem; font-family: var(--font-mono); font-size:.78rem; color: var(--guinda-dark); background: var(--guinda-light); border-radius: var(--radius-sm); padding:.3rem .5rem; }
+  @media (max-width: 760px) { .flow { grid-template-columns: 1fr; gap:1.4rem; } }
+
+  /* Manual de ejemplo (changelog-like) */
+  .doc-sample { font-family: var(--font-mono); font-size:.88rem; line-height:1.7; background: var(--off-white); border:1px solid var(--border); border-radius: var(--radius-md); padding: 1rem 1.2rem; margin: .8rem 0 1.2rem; }
+  .doc-sample .h { font-weight:700; color: var(--guinda); display:block; margin-top:.6rem; }
+  .doc-sample .h:first-child { margin-top:0; }
+  .doc-sample .w { color:#9A6600; font-weight:700; }
+  .doc-sample .n { color: var(--guinda-dark); font-weight:700; }
+
+  /* Ejercicios interactivos */
+  .ex-item { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; padding:.55rem .8rem; margin-bottom:.5rem; border:1px solid var(--border); border-radius: var(--radius-md); background: var(--white); }
+  .ex-item .q { flex: 1 1 220px; font-size:.95rem; line-height:1.5; }
+  .ex-item .q code { font-family: var(--font-mono); font-size:.88rem; color: var(--guinda-dark); }
+  .ex-item select, .ex-item .tf label { font-family: var(--font-ui); font-size:.88rem; }
+  .ex-item select { padding:.4rem .5rem; border:1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); min-width: 190px; }
+  .ex-item.num select { min-width: 70px; }
+  .ex-item .tf { display:flex; gap:1rem; }
+  .ex-item .tf label { display:flex; align-items:center; gap:.35rem; cursor:pointer; }
+  .ex-item.ok  { border-color:#1F7A5C; background:#EEF8F3; }
+  .ex-item.bad { border-color:#B3261E; background:#FFF3F2; }
+  .ex-item .mark { font-family: var(--font-ui); font-size:.8rem; font-weight:700; min-width: 6.5rem; }
+  .ex-item.ok .mark { color:#1F7A5C; } .ex-item.bad .mark { color:#B3261E; }
+  .ex-actions { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:.9rem; }
+  .btn { font-family: var(--font-ui); font-size:.85rem; font-weight:600; padding:.55rem 1.1rem; border-radius: var(--radius-md); cursor:pointer; border:1px solid var(--guinda); background: var(--guinda); color: var(--white); }
+  .btn.ghost { background: var(--white); color: var(--guinda); }
+  .btn:hover { filter: brightness(1.1); }
+  .ex-score { font-family: var(--font-ui); font-weight:700; color: var(--guinda); font-size:.92rem; }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.25rem 0; }
+  .table-scroll table { margin: 0; min-width: 480px; }
+
+  .footer-brand { display: flex; align-items: center; gap: .75rem; }
+  .footer-brand img { height: 32px; width: auto; }
+
+  /* Constructor de entradas */
+  .builder { display:grid; grid-template-columns: 1fr 1fr; gap:1.4rem; align-items:start; margin-top:.8rem; }
+  @media (max-width: 800px) { .builder { grid-template-columns: 1fr; } }
+  .field { margin-bottom:.8rem; }
+  .field label { display:block; font-family: var(--font-ui); font-size:.75rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color: var(--guinda); margin-bottom:.25rem; }
+  .field input, .field select, .field textarea { width:100%; font-family: var(--font-ui); font-size:.92rem; padding:.55rem .7rem; border:1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--white); color: var(--ink); }
+  .field textarea { min-height: 64px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:2px solid var(--guinda-rule); outline-offset:1px; }
+  .field small { font-family: var(--font-ui); font-size:.74rem; color: var(--ink-secondary); }
+  .ghost-text { color: var(--ink-muted); font-style: italic; }
+
+  /* Lista de verificación */
+  .checklist { list-style:none; margin:0; padding:0; }
+  .checklist li { padding:.55rem .2rem; border-bottom:1px solid var(--border); }
+  .checklist li:last-child { border-bottom:none; }
+  .checklist label { display:flex; gap:.7rem; align-items:flex-start; cursor:pointer; font-size:.95rem; line-height:1.5; }
+  .checklist input { width:1.15rem; height:1.15rem; margin-top:.25rem; accent-color: var(--guinda); flex-shrink:0; }
+  .check-total { margin-top:.8rem; font-family: var(--font-ui); font-weight:700; color: var(--guinda); font-size:.92rem; }
+  .meter { height:10px; background: var(--surface); border:1px solid var(--border); border-radius:999px; overflow:hidden; margin-top:.4rem; }
+  .meter i { display:block; height:100%; width:0; background: var(--guinda); transition: width .25s; }
+
+  /* ── Específico del Tema 2.1: presentaciones orales ── */
+  .listen {
+    display:inline-flex; align-items:center; justify-content:center; gap:.35rem;
+    font-family: var(--font-ui); font-size:.75rem; font-weight:600;
+    padding:.3rem .65rem; border-radius:999px; cursor:pointer;
+    border:1px solid var(--guinda); background: var(--white); color: var(--guinda); flex-shrink:0;
+  }
+  .listen[hidden], .btn[hidden] { display:none; }
+  .listen svg { width:15px; height:15px; }
+  .listen:hover { background: var(--guinda-light); }
+  .listen.playing { background: var(--guinda); color: var(--white); }
+  .tts-note { font-family: var(--font-ui); font-size:.8rem; color: var(--ink-secondary); background: var(--surface); border:1px dashed var(--border-strong); border-radius: var(--radius-md); padding:.55rem .8rem; margin:.8rem 0; }
+
+  .stages { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin:1.4rem 0; }
+  @media (max-width: 860px) { .stages { grid-template-columns: 1fr; } }
+  .stage { border:1px solid var(--border-strong); border-radius: var(--radius-lg); overflow:hidden; background: var(--white); box-shadow: var(--shadow-sm); }
+  .stage header { background: var(--guinda); color: var(--white); padding:.8rem 1rem; display:flex; align-items:center; gap:.7rem; }
+  .stage header .no { width:2rem; height:2rem; border-radius:50%; background: var(--white); color: var(--guinda); font-family: var(--font-ui); font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .stage header b { font-family: var(--font-display); font-size:1.3rem; line-height:1.1; display:block; }
+  .stage header span { font-family: var(--font-ui); font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; opacity:.85; }
+  .stage .time { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); padding:.6rem 1rem 0; }
+  .say-list { list-style:none; margin:0; padding:.4rem 1rem 1rem; }
+  .say { display:grid; grid-template-columns: 1fr auto; gap:.2rem .6rem; align-items:center; padding:.55rem 0; border-bottom:1px dashed var(--border); }
+  .say:last-child { border-bottom:none; }
+  .say .en { font-family: var(--font-mono); font-size:.84rem; color: var(--guinda-dark); line-height:1.45; }
+  .say .es { grid-column: 1 / 2; font-size:.82rem; color: var(--ink-secondary); line-height:1.4; }
+  .say .listen { grid-row: 1 / span 2; grid-column: 2; }
+
+  .intro-card { border:1px solid var(--border-strong); border-radius: var(--radius-lg); background: var(--white); padding:1.1rem 1.3rem; box-shadow: var(--shadow-sm); }
+  .intro-line { display:flex; flex-wrap:wrap; align-items:baseline; gap:.3rem .5rem; padding:.45rem 0; border-bottom:1px dashed var(--border); font-size:.97rem; line-height:1.55; }
+  .intro-line:last-of-type { border-bottom:none; }
+  .intro-line .en { font-family: var(--font-mono); font-size:.9rem; color: var(--guinda-dark); }
+  .intro-line .es { font-size:.85rem; color: var(--ink-secondary); flex-basis:100%; }
+  .blank { display:inline-block; min-width:5.5rem; border-bottom:2px solid var(--guinda); color: var(--guinda); text-align:center; font-family: var(--font-mono); font-size:.85rem; }
+
+  .timeline { display:grid; grid-template-columns: repeat(4, 1fr); gap:.9rem; margin:1.4rem 0; position:relative; }
+  .timeline::before { content:""; position:absolute; top:1.35rem; left:8%; right:8%; height:3px; background: var(--guinda-rule); opacity:.5; }
+  @media (max-width: 760px) { .timeline { grid-template-columns: 1fr; } .timeline::before { top:0; bottom:0; left:1.35rem; right:auto; width:3px; height:auto; } }
+  .tl { position:relative; text-align:center; }
+  .tl .dot { width:2.7rem; height:2.7rem; border-radius:50%; background: var(--guinda); color: var(--white); font-family: var(--font-ui); font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto .6rem; position:relative; z-index:1; border:3px solid var(--white); box-shadow: var(--shadow-sm); }
+  .tl .box { border:1px solid var(--border); border-radius: var(--radius-md); padding:.7rem .6rem; background: var(--off-white); }
+  .tl .w { font-family: var(--font-mono); font-size:1.05rem; font-weight:500; color: var(--guinda); display:block; }
+  .tl .es { font-family: var(--font-ui); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-secondary); display:block; margin-bottom:.35rem; }
+  .tl .eg { font-size:.84rem; line-height:1.45; }
+  @media (max-width: 760px) { .tl { display:grid; grid-template-columns: 2.7rem 1fr; gap:.8rem; text-align:left; align-items:center; } .tl .dot { margin:0; } }
+
+  .slide-pair { display:grid; grid-template-columns: 1fr 1fr; gap:1.2rem; margin:1.3rem 0; }
+  @media (max-width: 700px) { .slide-pair { grid-template-columns: 1fr; } }
+  .slide-wrap .cap { font-family: var(--font-ui); font-size:.75rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; margin-bottom:.4rem; display:block; }
+  .slide-wrap.bad .cap { color:#B3261E; }
+  .slide-wrap.good .cap { color:#1F7A5C; }
+  .slide { aspect-ratio: 16 / 9; border:2px solid var(--border-strong); border-radius: var(--radius-md); background: var(--white); padding:.8rem 1rem; overflow:hidden; position:relative; }
+  .slide-wrap.bad .slide { border-color:#B3261E; }
+  .slide-wrap.good .slide { border-color:#1F7A5C; }
+  .slide.dense { font-family: var(--font-body); font-size:.7rem; line-height:1.3; color: var(--ink-secondary); }
+  .slide.dense b { font-size:.85rem; color: var(--ink); display:block; margin-bottom:.15rem; }
+  .slide.clean { display:grid; grid-template-columns: 1.4fr 1fr; gap:.8rem; align-items:center; }
+  .slide.clean h4 { font-family: var(--font-display); font-size:1.25rem; color: var(--guinda); margin-bottom:.3rem; line-height:1.1; }
+  .slide.clean ul { list-style:none; padding:0; }
+  .slide.clean li { font-family: var(--font-ui); font-size:.85rem; font-weight:600; padding:.12rem 0; }
+  .slide.clean li::before { content:"\2022"; color: var(--guinda-rule); margin-right:.4rem; }
+  .slide.clean svg { width:100%; max-width:90px; color: var(--guinda); justify-self:center; }
+  .slide-note { font-size:.88rem; color: var(--ink-secondary); margin-top:.5rem; line-height:1.5; }
+
+  .pron-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:.7rem; margin:1rem 0; }
+  .pron-card { border:1px solid var(--border); border-radius: var(--radius-md); padding:.7rem .9rem; background: var(--off-white); display:grid; grid-template-columns: 1fr auto; gap:.1rem .5rem; align-items:center; }
+  .pron-card b { font-family: var(--font-mono); font-size:1rem; color: var(--guinda); font-weight:500; }
+  .pron-card span { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); font-style:italic; }
+  .pron-card small { grid-column:1/2; font-size:.8rem; color: var(--ink-secondary); }
+  .pron-card .listen { grid-row: 1 / span 3; grid-column:2; }
+
+  .script-box { border:1px solid var(--border-strong); border-radius: var(--radius-lg); background: var(--white); padding:1.1rem 1.3rem; margin:1rem 0; line-height:1.9; font-size:1rem; }
+  .script-box .p-open { color: var(--guinda); }
+  .script-box .p-body { color: #1F5E8A; }
+  .script-box .p-close { color: #9A5A00; }
+  .script-box .ph { color: var(--ink-muted); font-style: italic; }
+  .script-legend { display:flex; flex-wrap:wrap; gap:.5rem; font-family: var(--font-ui); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.5rem; }
+  .script-legend span { padding:.15rem .6rem; border-radius:999px; border:1px solid currentColor; }
+  .script-legend .o { color: var(--guinda); } .script-legend .b { color:#1F5E8A; } .script-legend .c { color:#9A5A00; }
+  .script-actions { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:.8rem; }
+  .timer-box { display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; margin-top:1rem; padding:.8rem 1rem; border:1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+  .timer-box .t { font-family: var(--font-mono); font-size:1.7rem; font-weight:500; color: var(--guinda); min-width: 4.5rem; }
+  .timer-box.done .t { color:#B3261E; }
+  .timer-box small { font-family: var(--font-ui); font-size:.78rem; color: var(--ink-secondary); }
+
+  .ex-item .q select.inl { min-width: 115px; margin-right:.25rem; }
+  .ex-item.num select { min-width: 70px; }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap"><img src="imagen1.png" alt="Mixtle, mascota del IEDEP"></div>
+  <div class="header-text">
+    <span class="inst-name">Instituto de Educación Digital del Estado de Puebla</span>
+    <span class="doc-title">Material de clase · Inglés para Ingeniería I</span>
+  </div>
+</header>
+
+<section class="class-hero">
+  <div class="hero-inner">
+    <span class="class-label">Licenciatura en Sistemas Computacionales</span>
+    <h1>Tema 2.1 — Presentaciones técnicas en inglés</h1>
+    <span class="class-subtitle">Unidad 2: Comunicación oral en contextos técnicos · Cómo presentar una idea de computación en inglés, paso a paso</span>
+    <div class="meta-row">
+      <div class="meta-item">Programa educativo<span>Lic. en Sistemas Computacionales</span></div>
+      <div class="meta-item">Asignatura<span>Inglés para Ingeniería I</span></div>
+      <div class="meta-item">Unidad<span>2 · Comunicación oral en contextos técnicos</span></div>
+      <div class="meta-item">Tema<span>2.1 Presentaciones técnicas en inglés</span></div>
+      <div class="meta-item">Fecha<span>25 de octubre de 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="page-wrapper">
+
+  <!-- ═════════ COMPETENCIAS ═════════ -->
+  <section class="section" id="competencias">
+    <h2 class="section-title">Competencias a desarrollar</h2>
+    <div class="competency-card">
+      <span class="comp-num">01</span>
+      <div class="comp-text"><strong>Identificar</strong> las tres partes de una presentación técnica corta (apertura, desarrollo y cierre) y las frases más útiles de cada una.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">02</span>
+      <div class="comp-text"><strong>Usar</strong> palabras de secuencia (<em>first, then, after that, finally</em>) para explicar un proceso de computación en orden.</div>
+    </div>
+    <div class="competency-card">
+      <span class="comp-num">03</span>
+      <div class="comp-text"><strong>Preparar y practicar</strong> un guion breve en inglés, con pronunciación clara de vocabulario de sistemas computacionales.</div>
+    </div>
+  </section>
+
+  <!-- ═════════ PUNTO DE PARTIDA ═════════ -->
+  <section class="section" id="analogia">
+    <h2 class="section-title">Punto de partida: una presentación es como un programa</h2>
+
+    <div class="mixtle-tip">
+      <img src="imagen2.png" alt="Mixtle, el mapache ingeniero, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <span class="concept-title" style="margin-bottom:.4rem;">Mixtle dice…</span>
+        <p>«Todo programa tiene un <strong>inicio</strong>, un <strong>proceso</strong> y un <strong>final</strong>. Una presentación también. Si ya sabes organizar un programa, ya sabes organizar una presentación. Y no te preocupes por hablar perfecto: <strong>una presentación técnica corta usa frases sencillas</strong> que puedes aprender de memoria. Hoy vas a conocerlas, escucharlas y practicarlas.»</p>
+      </div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-card">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M17 20l-3 2 3 2M31 20l3 2-3 2M19 31c3 3 7 3 10 0"/></svg>
+        <h3>Lo que muchos piensan</h3>
+        <p>«Tengo que hablar inglés perfecto, rápido y sin errores o me van a juzgar.»</p>
+      </div>
+      <div class="vs-card good">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M16 42h16M24 34v8"/><path d="M15 26l5-6 5 4 8-9"/></svg>
+        <h3>Lo que realmente funciona</h3>
+        <p>Frases cortas, ideas en orden, voz clara y ritmo lento. Eso comunica mejor que palabras difíciles.</p>
+      </div>
+    </div>
+
+    <div class="big-idea">
+      Una idea, una frase, una pausa.
+      <small>HABLAR DESPACIO ES HABLAR BIEN</small>
+    </div>
+  </section>
+
+  <!-- ═════════ TRES PARTES ═════════ -->
+  <section class="section" id="estructura">
+    <h2 class="section-title">Las tres partes de una presentación</h2>
+    <p>Una presentación técnica corta (de uno a dos minutos) siempre tiene <strong>tres partes</strong>. Cada una tiene sus frases favoritas. Presiona el botón <strong>Escuchar</strong> para oír cómo se dicen.</p>
+
+    <div class="tts-note" id="tts-note" hidden>Tu navegador no puede reproducir voz. Puedes abrir esta página en Chrome o Edge para usar los botones «Escuchar». Mientras tanto, lee las pronunciaciones de la tabla.</div>
+
+    <div class="stages">
+      <div class="stage">
+        <header><span class="no">1</span><div><b>Opening</b><span>Apertura</span></div></header>
+        <p class="time">Saludas, te presentas y dices el tema (unos 20 segundos).</p>
+        <ul class="say-list">
+          <li class="say"><span class="en">Hello everyone.</span><span class="es">Hola a todos.</span><button class="listen" data-say="Hello everyone." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">My name is Ana.</span><span class="es">Me llamo Ana.</span><button class="listen" data-say="My name is Ana." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">Today I am going to talk about backups.</span><span class="es">Hoy voy a hablar de los respaldos.</span><button class="listen" data-say="Today I am going to talk about backups." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+        </ul>
+      </div>
+
+      <div class="stage">
+        <header><span class="no">2</span><div><b>Body</b><span>Desarrollo</span></div></header>
+        <p class="time">Explicas las ideas o los pasos, en orden (el resto del tiempo).</p>
+        <ul class="say-list">
+          <li class="say"><span class="en">First, open the Settings menu.</span><span class="es">Primero, abre el menú de configuración.</span><button class="listen" data-say="First, open the Settings menu." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">Then, click Start.</span><span class="es">Luego, haz clic en Iniciar.</span><button class="listen" data-say="Then, click Start." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">Look at this slide.</span><span class="es">Miren esta diapositiva.</span><button class="listen" data-say="Look at this slide." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">This is very important.</span><span class="es">Esto es muy importante.</span><button class="listen" data-say="This is very important." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+        </ul>
+      </div>
+
+      <div class="stage">
+        <header><span class="no">3</span><div><b>Closing</b><span>Cierre</span></div></header>
+        <p class="time">Resumes, agradeces y abres preguntas (unos 15 segundos).</p>
+        <ul class="say-list">
+          <li class="say"><span class="en">In summary, a backup protects your files.</span><span class="es">En resumen, un respaldo protege tus archivos.</span><button class="listen" data-say="In summary, a backup protects your files." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">Thank you for listening.</span><span class="es">Gracias por escuchar.</span><button class="listen" data-say="Thank you for listening." type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+          <li class="say"><span class="en">Do you have any questions?</span><span class="es">¿Tienen alguna pregunta?</span><button class="listen" data-say="Do you have any questions?" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <p><strong>Truco:</strong> si memorizas estas diez frases ya puedes abrir y cerrar cualquier presentación. Solo cambias el nombre, el tema y los pasos del desarrollo.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ PRESENTARSE ═════════ -->
+  <section class="section" id="presentarse">
+    <h2 class="section-title">Cómo presentarte en tu apertura</h2>
+    <p>La primera impresión se forma en los primeros diez segundos. Estas son las frases para presentarte en un contexto de tecnología:</p>
+
+    <div class="intro-card">
+      <div class="intro-line"><span class="en">Hello everyone. My name is <span class="blank">your name</span>.</span><span class="es">Hola a todos. Me llamo (tu nombre).</span></div>
+      <div class="intro-line"><span class="en">I am a student at IEDEP.</span><span class="es">Soy estudiante del IEDEP.</span></div>
+      <div class="intro-line"><span class="en">I study Computer Systems.</span><span class="es">Estudio Sistemas Computacionales.</span></div>
+      <div class="intro-line"><span class="en">Today I am going to talk about <span class="blank">your topic</span>.</span><span class="es">Hoy voy a hablar de (tu tema).</span></div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Recuerda:</strong> en inglés <em>I am</em> (yo soy / estoy) se puede decir <em>I’m</em> al hablar, y <em>I am going to</em> es lo mismo que «voy a». Con <em>I am going to + verbo</em> anuncias lo que vas a hacer: <em>I am going to explain</em> (voy a explicar), <em>I am going to show</em> (voy a mostrar).</p>
+    </div>
+  </section>
+
+  <!-- ═════════ SECUENCIA ═════════ -->
+  <section class="section" id="secuencia">
+    <h2 class="section-title">Palabras para explicar en orden</h2>
+    <p>En el desarrollo explicas un proceso. Para que tu audiencia no se pierda, usa <strong>palabras de secuencia</strong>. Funcionan como los números de las líneas de un programa:</p>
+
+    <div class="timeline">
+      <div class="tl">
+        <div class="dot">1</div>
+        <div class="box"><span class="w">First</span><span class="es">Primero</span><span class="eg">First, open the Settings menu.</span></div>
+      </div>
+      <div class="tl">
+        <div class="dot">2</div>
+        <div class="box"><span class="w">Then</span><span class="es">Luego</span><span class="eg">Then, select “Backup”.</span></div>
+      </div>
+      <div class="tl">
+        <div class="dot">3</div>
+        <div class="box"><span class="w">After that</span><span class="es">Después de eso</span><span class="eg">After that, click Start.</span></div>
+      </div>
+      <div class="tl">
+        <div class="dot">4</div>
+        <div class="box"><span class="w">Finally</span><span class="es">Finalmente</span><span class="eg">Finally, check your files.</span></div>
+      </div>
+    </div>
+
+    <div class="mixtle-tip small reverse">
+      <img src="imagen2.png" alt="Mixtle, mascota del IEDEP">
+      <div class="mixtle-bubble">
+        <p><strong>Fíjate:</strong> después de la palabra de secuencia va una <strong>coma</strong> y luego un verbo en forma de orden (<em>open, select, click, check</em>), igual que aprendiste en los manuales del Tema 1.3. En la voz, haz una pequeña pausa donde está la coma.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ DIAPOSITIVAS ═════════ -->
+  <section class="section" id="diapositivas">
+    <h2 class="section-title">Diapositivas que ayudan, no estorban</h2>
+    <p>Tus diapositivas (<em>slides</em>) son un apoyo, no tu guion. Compara estas dos:</p>
+
+    <div class="slide-pair">
+      <div class="slide-wrap bad">
+        <span class="cap">Evita: demasiado texto</span>
+        <div class="slide dense" role="img" aria-label="Diapositiva con demasiado texto">
+          <b>What is a backup?</b>
+          A backup is a copy of all the files and programs that are stored in a computer. It is used to recover information when a hard drive fails, when a virus attacks the system, or when a user deletes a file by mistake. There are many types of backup, for example full backup, incremental backup and differential backup, and each one has advantages and disadvantages that depend on the size of the data.
+        </div>
+        <p class="slide-note">Nadie puede leer y escucharte al mismo tiempo.</p>
+      </div>
+      <div class="slide-wrap good">
+        <span class="cap">Mejor: pocas palabras y una imagen</span>
+        <div class="slide clean" role="img" aria-label="Diapositiva clara con tres ideas">
+          <div>
+            <h4>Make a backup</h4>
+            <ul><li>Connect the drive</li><li>Click Start</li><li>Check the files</li></ul>
+          </div>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="14" width="36" height="20" rx="3"/><path d="M12 28h12M34 28h.01M38 28h.01"/><path d="M24 6v8M20 10l4-4 4 4"/></svg>
+        </div>
+        <p class="slide-note">Tres ideas cortas y una imagen. Tú explicas el resto con tu voz.</p>
+      </div>
+    </div>
+
+    <div class="table-scroll"><table>
+      <thead><tr><th>Haz esto</th><th>Evita esto</th></tr></thead>
+      <tbody>
+        <tr><td>Una idea por diapositiva</td><td>Poner todo el tema en una sola</td></tr>
+        <tr><td>Máximo tres o cuatro frases cortas</td><td>Párrafos largos</td></tr>
+        <tr><td>Letra grande y legible</td><td>Letra pequeña para que «quepa»</td></tr>
+        <tr><td>Una imagen, ícono o diagrama</td><td>Solo texto</td></tr>
+        <tr><td>Mirar a tu audiencia y explicar con tus palabras</td><td>Leer la diapositiva palabra por palabra</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═════════ PRONUNCIACIÓN ═════════ -->
+  <section class="section" id="pronunciacion">
+    <h2 class="section-title">Pronuncia con confianza: ocho palabras de computación</h2>
+    <p>Estas palabras aparecen en casi todas las presentaciones técnicas. Escucha cada una y repítela en voz alta tres veces. La pronunciación escrita es solo una guía aproximada.</p>
+
+    <div class="pron-grid">
+      <div class="pron-card"><b>server</b><span>sér-ver</span><small>servidor</small><button class="listen" data-say="server" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>database</b><span>déi-ta-béis</span><small>base de datos</small><button class="listen" data-say="database" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>network</b><span>nét-uerk</span><small>red</small><button class="listen" data-say="network" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>software</b><span>sóft-uer</span><small>programas</small><button class="listen" data-say="software" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>password</b><span>pás-uerd</span><small>contraseña</small><button class="listen" data-say="password" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>backup</b><span>bák-ap</span><small>respaldo</small><button class="listen" data-say="backup" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>install</b><span>in-stól</span><small>instalar</small><button class="listen" data-say="install" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+      <div class="pron-card"><b>update</b><span>ap-déit</span><small>actualizar</small><button class="listen" data-say="update" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>Escuchar</button></div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Tres reglas para sonar claro:</strong> <strong>1)</strong> habla más despacio de lo que crees necesario; <strong>2)</strong> marca con más fuerza la sílaba acentuada (<em>SER-ver</em>, <em>DEI-ta-beis</em>); <strong>3)</strong> haz una pausa corta después de cada paso.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ EJEMPLO RESUELTO ═════════ -->
+  <section class="section" id="ejemplo">
+    <h2 class="section-title">Ejemplo resuelto: una presentación completa de un minuto</h2>
+
+    <div class="example-block">
+      <div class="example-header">Presentación de ejemplo — «How to make a backup»</div>
+      <div class="example-body">
+        <div class="script-legend"><span class="o">Opening</span><span class="b">Body</span><span class="c">Closing</span></div>
+        <div class="script-box" id="demo-script">
+          <span class="p-open">Hello everyone. My name is Luis. Today I am going to explain how to make a backup of your files.</span>
+          <span class="p-body"> First, connect an external drive to the computer. Then, open the Backup tool. After that, click Start. Finally, check that the files are in the drive.</span>
+          <span class="p-close"> In summary, a backup protects your files. Thank you for listening. Do you have any questions?</span>
+        </div>
+        <div class="script-actions">
+          <button class="btn" type="button" id="demo-listen">Escuchar la presentación completa</button>
+        </div>
+
+        <details class="answer-key" style="margin-top:1rem; border:1px dashed var(--border-strong); border-radius:6px; padding:.75rem 1rem;">
+          <summary style="cursor:pointer; font-family:var(--font-ui); font-size:.85rem; font-weight:600; color:var(--guinda);">Ver la traducción al español</summary>
+          <p style="margin-top:.6rem; font-size:.92rem;">Hola a todos. Me llamo Luis. Hoy voy a explicar cómo hacer un respaldo de tus archivos. Primero, conecta una unidad externa a la computadora. Luego, abre la herramienta de respaldo. Después de eso, haz clic en Iniciar. Finalmente, verifica que los archivos estén en la unidad. En resumen, un respaldo protege tus archivos. Gracias por escuchar. ¿Tienen alguna pregunta?</p>
+        </details>
+
+        <ol class="step-list" style="margin-top:1.2rem;">
+          <li><span class="step-n">1</span><span class="step-content"><strong>Apertura:</strong> saluda, di tu nombre y anuncia el tema con <em>Today I am going to explain…</em></span></li>
+          <li><span class="step-n">2</span><span class="step-content"><strong>Desarrollo:</strong> cuatro pasos con palabras de secuencia y verbos de orden (<em>connect, open, click, check</em>).</span></li>
+          <li><span class="step-n">3</span><span class="step-content"><strong>Cierre:</strong> resume en una oración, agradece y abre preguntas.</span></li>
+        </ol>
+        <div class="result-line">Resultado: solo 60 palabras aproximadamente, y ya tienes una presentación técnica completa. ¡Eso es lo que vas a lograr hoy!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ TALLER ═════════ -->
+  <section class="section" id="practica">
+    <h2 class="section-title">Taller práctico</h2>
+    <p>Resuelve los ejercicios 1 y 2 y presiona <strong>Revisar</strong>. En el ejercicio 3 vas a armar y practicar tu propio guion.</p>
+
+    <!-- Ejercicio 1 -->
+    <div class="card ex" id="ex1">
+      <span class="card-title">Ejercicio 1 · Ordena las partes de la presentación</span>
+      <p>Escribe el número de orden (del 1 al 5) en que se diría cada frase. <em>Pista: empieza con el saludo y termina con el agradecimiento.</em></p>
+
+      <div class="ex-item num" data-ans="3"><span class="q">First, connect the external drive.</span><select></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="5"><span class="q">Thank you for listening.</span><select></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="1"><span class="q">Hello everyone. My name is Ana.</span><select></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="4"><span class="q">Finally, click Start backup.</span><select></select><span class="mark"></span></div>
+      <div class="ex-item num" data-ans="2"><span class="q">Today I am going to explain how to make a backup.</span><select></select><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check" type="button">Revisar</button>
+        <button class="btn ghost" data-act="show" type="button">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset" type="button">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 2 -->
+    <div class="card ex" id="ex2">
+      <span class="card-title">Ejercicio 2 · Completa la presentación</span>
+      <p>Elige la palabra correcta para cada espacio. Cada palabra se usa una sola vez.</p>
+
+      <div class="ex-item" data-ans="Hello"><span class="q"><select class="inl"></select> everyone. My name is Luis.</span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Today"><span class="q"><select class="inl"></select> I am going to explain how to install an app.</span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="First"><span class="q"><select class="inl"></select>, download the installer.</span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Then"><span class="q"><select class="inl"></select>, click Next.</span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Finally"><span class="q"><select class="inl"></select>, restart the computer.</span><span class="mark"></span></div>
+      <div class="ex-item" data-ans="Thank"><span class="q"><select class="inl"></select> you for listening.</span><span class="mark"></span></div>
+
+      <div class="ex-actions">
+        <button class="btn" data-act="check" type="button">Revisar</button>
+        <button class="btn ghost" data-act="show" type="button">Mostrar respuestas</button>
+        <button class="btn ghost" data-act="reset" type="button">Borrar</button>
+        <span class="ex-score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Ejercicio 3 -->
+    <div class="card" id="ex3">
+      <span class="card-title">Ejercicio 3 · Arma tu propio guion y practícalo</span>
+      <p>Llena los campos con un tema de computación que conozcas. Escribe los pasos en inglés y <strong>empezando con un verbo</strong> (por ejemplo <em>download the installer</em>, <em>click Next</em>). Tu guion se arma solo. Esta práctica no se califica.</p>
+
+      <div class="builder">
+        <div>
+          <div class="field"><label for="g-name">1. Tu nombre</label><input id="g-name" type="text" maxlength="30" placeholder="Ejemplo: Ana" autocomplete="off"></div>
+          <div class="field"><label for="g-topic">2. Tema (empieza con un verbo)</label><input id="g-topic" type="text" maxlength="60" list="topics" placeholder="Ejemplo: install an app" autocomplete="off">
+            <datalist id="topics"><option value="install an app"><option value="make a backup"><option value="create a strong password"><option value="connect to a Wi-Fi network"><option value="update the operating system"></datalist>
+            <small>Puedes elegir una sugerencia o escribir la tuya.</small></div>
+          <div class="field"><label for="g-s1">3. Paso 1 (First)</label><input id="g-s1" type="text" maxlength="70" placeholder="Ejemplo: download the installer" autocomplete="off"></div>
+          <div class="field"><label for="g-s2">4. Paso 2 (Then)</label><input id="g-s2" type="text" maxlength="70" placeholder="Ejemplo: click Next" autocomplete="off"></div>
+          <div class="field"><label for="g-s3">5. Paso 3 (Finally)</label><input id="g-s3" type="text" maxlength="70" placeholder="Ejemplo: restart the computer" autocomplete="off"></div>
+        </div>
+
+        <div>
+          <div class="script-legend"><span class="o">Opening</span><span class="b">Body</span><span class="c">Closing</span></div>
+          <div class="script-box" id="my-script" aria-live="polite"></div>
+          <div class="script-actions">
+            <button class="btn" type="button" id="my-listen">Escuchar mi guion</button>
+            <button class="btn ghost" type="button" id="my-copy">Copiar guion</button>
+            <span class="ex-score" id="my-msg" aria-live="polite"></span>
+          </div>
+
+          <div class="timer-box" id="timer-box">
+            <span class="t" id="timer-t">01:00</span>
+            <button class="btn ghost" type="button" id="timer-go">Practicar 1 minuto</button>
+            <small id="timer-msg">Lee tu guion en voz alta mientras corre el tiempo.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ AUTOEVALUACIÓN ═════════ -->
+  <section class="section" id="autoevaluacion">
+    <h2 class="section-title">Autoevaluación: ¿cómo salió tu práctica?</h2>
+    <p>Después de leer tu guion en voz alta, marca lo que lograste. Si no marcaste algo, vuelve a practicar esa parte.</p>
+
+    <div class="card">
+      <ul class="checklist" id="checklist">
+        <li><label><input type="checkbox"> Saludé y dije mi nombre.</label></li>
+        <li><label><input type="checkbox"> Anuncié mi tema con «Today I am going to…».</label></li>
+        <li><label><input type="checkbox"> Usé First, Then y Finally para ordenar los pasos.</label></li>
+        <li><label><input type="checkbox"> Cada paso empezó con un verbo (open, click, connect…).</label></li>
+        <li><label><input type="checkbox"> Hablé despacio y con una pausa después de cada paso.</label></li>
+        <li><label><input type="checkbox"> Pronuncié con claridad las palabras técnicas.</label></li>
+        <li><label><input type="checkbox"> Cerré con un resumen y con «Thank you for listening».</label></li>
+        <li><label><input type="checkbox"> Mi presentación duró cerca de un minuto.</label></li>
+      </ul>
+      <div class="check-total" id="check-total" aria-live="polite">Listo: 0 de 8</div>
+      <div class="meter" aria-hidden="true"><i id="check-meter"></i></div>
+    </div>
+
+    <div class="concept-box">
+      <span class="concept-title">Mirando hacia adelante: el video de instrucción técnica</span>
+      <p>El producto de la Unidad 2 es un <strong>video de instrucción técnica</strong>, donde explicarás un procedimiento de computación con pasos en orden y comandos como <em>open, click</em> y <em>install</em>. El guion que practicaste hoy es la base de ese video. Tu asesor confirmará las indicaciones, la duración y la fecha de entrega.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ CIERRE ═════════ -->
+  <section class="section" id="cierre">
+    <h2 class="section-title">Cierre de la sesión</h2>
+    <div class="concept-box">
+      <span class="concept-title">Síntesis</span>
+      <p>Hoy empezaste la Unidad 2 con una idea clave: <strong>una presentación técnica tiene tres partes</strong>, apertura (<em>opening</em>), desarrollo (<em>body</em>) y cierre (<em>closing</em>), y cada una tiene frases sencillas que puedes aprender y usar. Practicaste las palabras de secuencia <strong>first, then, after that</strong> y <strong>finally</strong>, aprendiste a preparar diapositivas claras y pronunciaste ocho palabras de computación. Por último, armaste un guion propio. En el Tema 2.2 vas a profundizar en cómo <strong>explicar procesos y procedimientos</strong> con pasos y comandos precisos.</p>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <h2 class="section-title">Conclusión</h2>
+    <p>En Sistemas Computacionales no basta con saber hacer las cosas; también hay que poder explicarlas: a un compañero, a un cliente o a un equipo de trabajo. Cuando esa explicación es en inglés, la clave no es usar palabras complicadas sino tener una <strong>estructura clara</strong> y practicarla. Con una apertura breve, pasos en orden, diapositivas simples y una voz tranquila, cualquier idea técnica se vuelve fácil de entender. Cada vez que repitas tu guion en voz alta, tu confianza y tu pronunciación van a mejorar.</p>
+  </section>
+
+  <section class="section" id="referencias">
+    <h2 class="section-title">Referencias bibliográficas</h2>
+    <p style="font-size:.92rem; color:var(--ink-secondary);">Glendinning, E. H. y McEwan, J. (2021). <em>Oxford English for computing</em> (Nueva edición revisada). Oxford University Press.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="imagen1.png" alt="Mixtle">
+    <span><strong>IEDEP</strong> · Instituto de Educación Digital del Estado de Puebla</span>
+  </div>
+  <span>Inglés para Ingeniería I · Mtro. José Armando Vera Rodríguez</span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Voz (Web Speech API) ── */
+  var synth = window.speechSynthesis;
+  var ttsOK = !!(synth && window.SpeechSynthesisUtterance);
+  var current = null;
+
+  function stopAll() {
+    if (ttsOK) { try { synth.cancel(); } catch (e) {} }
+    document.querySelectorAll(".listen.playing").forEach(function (b) { b.classList.remove("playing"); });
+    current = null;
+  }
+  function speak(text, btn) {
+    if (!ttsOK) { return; }
+    var wasPlaying = btn && btn.classList.contains("playing");
+    stopAll();
+    if (wasPlaying) return;
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = 0.85;
+    try {
+      var voices = synth.getVoices();
+      for (var i = 0; i < voices.length; i++) {
+        if (/^en[-_]US/i.test(voices[i].lang)) { u.voice = voices[i]; break; }
+      }
+    } catch (e) {}
+    if (btn) btn.classList.add("playing");
+    var done = function () { if (btn) btn.classList.remove("playing"); };
+    u.onend = done; u.onerror = done;
+    current = u;
+    try { synth.speak(u); } catch (e) { done(); }
+  }
+
+  if (!ttsOK) {
+    document.querySelectorAll(".listen").forEach(function (b) { b.hidden = true; });
+    document.getElementById("tts-note").hidden = false;
+  }
+  document.querySelectorAll(".listen[data-say]").forEach(function (b) {
+    b.addEventListener("click", function () { speak(b.getAttribute("data-say"), b); });
+  });
+  var demoBtn = document.getElementById("demo-listen");
+  if (!ttsOK) { demoBtn.hidden = true; }
+  demoBtn.addEventListener("click", function () {
+    speak(document.getElementById("demo-script").textContent.replace(/\s+/g, " ").trim(), demoBtn);
+  });
+  window.addEventListener("pagehide", stopAll);
+
+  /* ── Ejercicios con selectores ── */
+  var NUM = ["1", "2", "3", "4", "5"];
+  var WORDS = ["Finally", "First", "Hello", "Then", "Thank", "Today"];
+  function fillSelect(sel, list) {
+    var first = document.createElement("option");
+    first.value = ""; first.textContent = sel.classList.contains("inl") ? "Elige…" : "–";
+    sel.appendChild(first);
+    list.forEach(function (v) { var o = document.createElement("option"); o.value = v; o.textContent = v; sel.appendChild(o); });
+  }
+  document.querySelectorAll("#ex1 select").forEach(function (s) { fillSelect(s, NUM); });
+  document.querySelectorAll("#ex2 select").forEach(function (s) { fillSelect(s, WORDS); });
+
+  function clearMarks(box) {
+    box.querySelectorAll(".ex-item").forEach(function (it) {
+      it.classList.remove("ok", "bad");
+      it.querySelector(".mark").textContent = "";
+    });
+  }
+  document.querySelectorAll(".ex").forEach(function (box) {
+    var score = box.querySelector(".ex-score");
+    box.addEventListener("click", function (e) {
+      var act = e.target.getAttribute && e.target.getAttribute("data-act");
+      if (!act) return;
+      var items = box.querySelectorAll(".ex-item");
+      if (act === "check") {
+        var ok = 0, empty = 0;
+        items.forEach(function (it) {
+          var v = it.querySelector("select").value;
+          it.classList.remove("ok", "bad");
+          if (v === "") { empty++; it.classList.add("bad"); it.querySelector(".mark").textContent = "Sin responder"; return; }
+          if (v === it.getAttribute("data-ans")) { ok++; it.classList.add("ok"); it.querySelector(".mark").textContent = "Correcto"; }
+          else { it.classList.add("bad"); it.querySelector(".mark").textContent = "Revisa de nuevo"; }
+        });
+        score.textContent = "Aciertos: " + ok + " de " + items.length +
+          (ok === items.length ? " · ¡Excelente!" : (empty ? " · Te faltan " + empty + " por responder" : " · ¡Casi! Corrige y vuelve a revisar"));
+      }
+      if (act === "show") {
+        clearMarks(box);
+        items.forEach(function (it) {
+          it.querySelector("select").value = it.getAttribute("data-ans");
+          it.classList.add("ok");
+          it.querySelector(".mark").textContent = "Respuesta";
+        });
+        score.textContent = "Estas son las respuestas correctas.";
+      }
+      if (act === "reset") {
+        items.forEach(function (it) { it.querySelector("select").value = ""; });
+        clearMarks(box);
+        score.textContent = "";
+      }
+    });
+    box.addEventListener("change", function () { clearMarks(box); score.textContent = ""; });
+  });
+
+  /* ── Constructor de guion (ejercicio 3) ── */
+  var F = { name: "g-name", topic: "g-topic", s1: "g-s1", s2: "g-s2", s3: "g-s3" };
+  var PH = { name: "[your name]", topic: "[your topic]", s1: "[step 1]", s2: "[step 2]", s3: "[step 3]" };
+  var out = document.getElementById("my-script");
+
+  function val(k) {
+    return document.getElementById(F[k]).value.trim().replace(/[.\s]+$/, "");
+  }
+  function addPart(cls, text, isPh) {
+    var s = document.createElement("span");
+    s.className = isPh ? "ph" : cls;
+    s.textContent = text;
+    out.appendChild(s);
+  }
+  function piece(cls, before, key, after) {
+    var v = val(key);
+    var s = document.createElement("span"); s.className = cls;
+    s.appendChild(document.createTextNode(before));
+    var m = document.createElement("span");
+    if (v) { m.textContent = v; } else { m.className = "ph"; m.textContent = PH[key]; }
+    s.appendChild(m);
+    s.appendChild(document.createTextNode(after));
+    out.appendChild(s);
+  }
+  function render() {
+    out.textContent = "";
+    piece("p-open", "Hello everyone. My name is ", "name", ". ");
+    piece("p-open", "Today I am going to explain how to ", "topic", ". ");
+    piece("p-body", "First, ", "s1", ". ");
+    piece("p-body", "Then, ", "s2", ". ");
+    piece("p-body", "Finally, ", "s3", ". ");
+    var c = document.createElement("span"); c.className = "p-close";
+    c.textContent = "Thank you for listening. Do you have any questions?";
+    out.appendChild(c);
+  }
+  function complete() { return ["name", "topic", "s1", "s2", "s3"].every(function (k) { return val(k) !== ""; }); }
+  function plain() { return out.textContent.replace(/\s+/g, " ").trim(); }
+
+  Object.keys(F).forEach(function (k) { document.getElementById(F[k]).addEventListener("input", function () { msg.textContent = ""; render(); }); });
+  var msg = document.getElementById("my-msg");
+  render();
+
+  var myListen = document.getElementById("my-listen");
+  if (!ttsOK) myListen.hidden = true;
+  myListen.addEventListener("click", function () {
+    if (!complete()) { msg.textContent = "Completa los cinco campos para escuchar tu guion."; return; }
+    msg.textContent = "";
+    speak(plain(), myListen);
+  });
+
+  document.getElementById("my-copy").addEventListener("click", function () {
+    if (!complete()) { msg.textContent = "Completa los cinco campos para copiar tu guion."; return; }
+    var text = plain();
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      msg.textContent = ok ? "Guion copiado." : "No se pudo copiar. Selecciona el texto y cópialo manualmente.";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { msg.textContent = "Guion copiado."; }, fallback);
+    } else { fallback(); }
+  });
+
+  /* ── Temporizador de práctica ── */
+  var tBox = document.getElementById("timer-box"), tT = document.getElementById("timer-t"),
+      tGo = document.getElementById("timer-go"), tMsg = document.getElementById("timer-msg");
+  var timer = null, left = 60;
+  function show() { var m = Math.floor(left / 60), s = left % 60; tT.textContent = "0" + m + ":" + (s < 10 ? "0" : "") + s; }
+  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+  tGo.addEventListener("click", function () {
+    if (timer) { stopTimer(); left = 60; show(); tBox.classList.remove("done"); tGo.textContent = "Practicar 1 minuto"; tMsg.textContent = "Lee tu guion en voz alta mientras corre el tiempo."; return; }
+    left = 60; show(); tBox.classList.remove("done");
+    tGo.textContent = "Detener"; tMsg.textContent = "¡Habla despacio y claro!";
+    timer = setInterval(function () {
+      left--; show();
+      if (left <= 0) {
+        stopTimer(); tBox.classList.add("done");
+        tGo.textContent = "Practicar de nuevo"; tMsg.textContent = "¡Tiempo! ¿Alcanzaste a terminar tu guion?";
+      }
+    }, 1000);
+  });
+  show();
+
+  /* ── Lista de autoevaluación ── */
+  var boxes = document.querySelectorAll("#checklist input[type=checkbox]");
+  function updateChecks() {
+    var n = 0;
+    boxes.forEach(function (b) { if (b.checked) n++; });
+    document.getElementById("check-total").textContent = "Listo: " + n + " de " + boxes.length + (n === boxes.length ? " · ¡Excelente práctica!" : "");
+    document.getElementById("check-meter").style.width = (n / boxes.length * 100) + "%";
+  }
+  boxes.forEach(function (b) { b.addEventListener("change", updateChecks); });
+})();
+</script>
+
+</body>
+</html>
